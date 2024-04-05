@@ -1,0 +1,29 @@
+{
+  "Metadata": {
+    "description": "Alexandre's portfolio website"
+  },
+  "Index": {
+    "title": "Hello there!",
+    "subtitle": "I'm Alexandre,",
+    "description": "Fullstack developer JS based in Paris, France",
+
+    "experience": "Experience",
+    "exp-monk-title": "Monk.ai",
+    "exp-monk-descr": "Front-end developer",
+    "exp-monk-date": "Apr 2021 - Sept 2022",
+
+    "education": "Education",
+    "ed-su-title": "Sorbonne University",
+    "ed-su-descr": "Msc. Computer Networking engineering",
+    "ed-su-date": "2022",
+    "ed-insta-title": "CFA Insta/Sorbonne University",
+    "ed-insta-descr": "Bsc. Software engineering",
+    "ed-insta-date": "2021",
+
+    "skills": "Skill"
+  },
+  "Footer": {
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  }
+}

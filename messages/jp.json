@@ -1,0 +1,29 @@
+{
+  "Metadata": {
+    "description": "アレクサンドル・エムのポートフォリオサイトです"
+  },
+  "Index": {
+    "title": "こんにちは！",
+    "subtitle": "アレクサンドルと申します。",
+    "description": "パリ在住のフルスタックエンジニア。",
+
+    "experience": "経歴",
+    "exp-monk-title": "Monk.ai",
+    "exp-monk-descr": "フロントエンドエンジニア",
+    "exp-monk-date": "2021年4月 - 2022年9月",
+
+    "education": "学歴",
+    "ed-su-title": "ソルボンヌ大学",
+    "ed-su-descr": "理学技術修士 - ネットワーク工学",
+    "ed-su-date": "2022年",
+    "ed-insta-title": "CFA Insta/ソルボンヌ大学",
+    "ed-insta-descr": "学士号 - ソフトウェア工学",
+    "ed-insta-date": "2021年",
+
+    "skills": "技術"
+  },
+  "Footer": {
+    "signIn": "ログイン",
+    "signOut": "ログアウト"
+  }
+}

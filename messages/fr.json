@@ -1,0 +1,29 @@
+{
+  "Metadata": {
+    "description": "Site web portfolio d'Alexandre Em"
+  },
+  "Index": {
+    "title": "Bonjour!",
+    "subtitle": "Je suis Alexandre,",
+    "description": "Développeur fullstack JS basé à Paris, France",
+
+    "experience": "Experience",
+    "exp-monk-title": "Monk.ai",
+    "exp-monk-descr": "Développeur front-end",
+    "exp-monk-date": "Avr 2021 - Sept 2022",
+
+    "education": "Education",
+    "ed-su-title": "Sorbonne Université",
+    "ed-su-descr": "Msc. Réseau",
+    "ed-su-date": "2022",
+    "ed-insta-title": "CFA Insta/Sorbonne Université",
+    "ed-insta-descr": "Titre RNCP 6, Développement logiciel",
+    "ed-insta-date": "2021",
+
+    "skills": "Compétence"
+  },
+  "Footer": {
+    "signIn": "Se connecter",
+    "signOut": "Se deconnecter"
+  }
+}
