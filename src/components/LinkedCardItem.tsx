@@ -1,3 +1,4 @@
+import { ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
@@ -11,6 +12,7 @@ export default function LinkedCardItem({ title, description, date, url, src }: L
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <p className="text-xs text-muted-foreground">{date}</p>
+        <ExternalLink className="text-muted-foreground w-4" />
       </div>
     </a>
   );

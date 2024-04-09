@@ -4,6 +4,12 @@ type LocaleParamsType = {
   };
 };
 
+type IdParamsType = {
+  params: {
+    id: string;
+  };
+};
+
 type WithClassNameComponentType = {
   className: string;
 };

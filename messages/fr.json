@@ -6,6 +6,8 @@
     "title": "Bonjour!",
     "subtitle": "Je suis Alexandre,",
     "description": "Développeur fullstack JS basé à Paris, France",
+    "resume": "CV",
+    "projects": "Projets",
 
     "experience": "Experience",
     "exp-monk-title": "Monk.ai",
@@ -22,8 +24,12 @@
 
     "skills": "Compétence"
   },
+  "NotFound": {
+    "title": "La page que vous tentez d'accéder n'existe pas."
+  },
   "Footer": {
-    "signIn": "Se connecter",
-    "signOut": "Se deconnecter"
+    "name": "Alexandre Em",
+    "job": "Développeur fullstack",
+    "contact": "Me contacter"
   }
 }

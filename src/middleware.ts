@@ -12,5 +12,13 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ['/', '/(fr|en|jp)?/blog/(.+)?', '/(fr|en|jp)?/projects/(.+)?', '/(fr|en|jp)?/gallery', '/(fr|en|jp)?/dashboard/(.+)'],
+  matcher: [
+    '/',
+    '/(fr|en|jp)?/blog/(.+)?',
+    '/(fr|en|jp)?/projects/(.+)?',
+    '/(fr|en|jp)?/gallery',
+    '/(fr|en|jp)?/not-found',
+    '/admin/(.+)?',
+    '/(fr|en|jp)?/contact',
+  ],
 };

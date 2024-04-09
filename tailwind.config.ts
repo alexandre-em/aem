@@ -72,6 +72,9 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         pulse: 'pulse 2.5s infinite',
       },
+      screens: {
+        xsm: '780px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

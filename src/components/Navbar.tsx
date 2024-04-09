@@ -3,7 +3,7 @@ import { Menu, Moon, PawPrint, Sun } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import React, { useCallback } from 'react';
+import React, { MouseEventHandler, useCallback, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -26,16 +26,24 @@ const emojiLang = {
 };
 
 function DarkModeButton({ className }: WithClassNameComponentType) {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, theme, systemTheme } = useTheme();
 
   const handleSelectTheme = useCallback(() => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  }, [theme, setTheme]);
+    let newTheme;
+
+    if (theme === 'system') {
+      newTheme = systemTheme === 'dark' ? 'light' : 'dark';
+    } else {
+      newTheme = theme === 'dark' ? 'light' : 'dark';
+    }
+
+    setTheme(newTheme);
+  }, [theme, setTheme, systemTheme]);
 
   return (
     <Button variant="outline" size="icon" onClick={handleSelectTheme} className={cn('ml-2', className)}>
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </Button>
   );
 }
@@ -68,34 +76,42 @@ function LanguageSwitch({ locale, className }: NavbarComponentsProps & WithClass
   );
 }
 
-function NavbarMenu({ locale, className }: NavbarComponentsProps & WithClassNameComponentType) {
+function NavbarMenu({
+  locale,
+  className,
+  onClick,
+}: NavbarComponentsProps & WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLLIElement> }) {
   return (
     <NavigationMenuList className={className}>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
         <Link className="sm:w-full" href={`/projects`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Works</NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
         <Link href={`/gallery`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Gallery</NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
         <Link href={`/blog`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Blog</NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <Button className="sm:rounded-3xl rounded-md m-1 w-full">
-        <Link href={`/projects`} locale={locale} legacyBehavior passHref>
-          Contact
-        </Link>
-      </Button>
+      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+        <Button className="sm:rounded-3xl rounded-md m-1 w-full">
+          <Link href={`/contact`} locale={locale} legacyBehavior passHref>
+            Contact
+          </Link>
+        </Button>
+      </NavigationMenuItem>
     </NavigationMenuList>
   );
 }
 
 export default function Navbar({ locale }: NavbarComponentsProps) {
+  const [open, setOpen] = useState<boolean | undefined>(false);
+
   return (
     <>
       <NavigationMenu className="p-2 min-w-full h-[56px] bg-background justify-between">
@@ -113,7 +129,7 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
         <NavbarMenu locale={locale} className="hidden sm:flex" />
 
         {/*Right Smartphone*/}
-        <Sheet>
+        <Sheet open={open} onOpenChange={(value) => setOpen(value)}>
           <SheetTrigger className="flex justify-center items-center sm:hidden w-[46px] h-[46px] rounded-2xl">
             <Menu />
           </SheetTrigger>
@@ -122,10 +138,17 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
               <SheetTitle>Alexandre Em</SheetTitle>
               <Separator />
             </SheetHeader>
-            <NavbarMenu locale={locale} className="flex flex-col w-full" />
+            <NavbarMenu locale={locale} className="flex flex-col w-full" onClick={() => setOpen(false)} />
             <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
-              <DarkModeButton className="" />
-              <LanguageSwitch locale={locale} className="" />
+              <Link href="/admin" locale="en">
+                <Button variant="ghost" className="text-primary-foreground">
+                  Admin
+                </Button>
+              </Link>
+              <div className="flex">
+                <DarkModeButton className="mr-3" />
+                <LanguageSwitch locale={locale} className="" />
+              </div>
             </SheetFooter>
           </SheetContent>
         </Sheet>

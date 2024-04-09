@@ -6,6 +6,8 @@
     "title": "Hello there!",
     "subtitle": "I'm Alexandre,",
     "description": "Fullstack developer JS based in Paris, France",
+    "resume": "Resume",
+    "projects": "My work",
 
     "experience": "Experience",
     "exp-monk-title": "Monk.ai",
@@ -17,13 +19,17 @@
     "ed-su-descr": "Msc. Computer Networking engineering",
     "ed-su-date": "2022",
     "ed-insta-title": "CFA Insta/Sorbonne University",
-    "ed-insta-descr": "Bsc. Software engineering",
+    "ed-insta-descr": "Bachelor, Software engineering",
     "ed-insta-date": "2021",
 
     "skills": "Skill"
   },
+  "NotFound": {
+    "title": "The page you are looking for cannot be found."
+  },
   "Footer": {
-    "signIn": "Sign in",
-    "signOut": "Sign out"
+    "name": "Alexandre Em",
+    "job": "Fullstack developer",
+    "contact": "Contact"
   }
 }

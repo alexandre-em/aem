@@ -3,6 +3,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 import '../globals.css';
 
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/providers/theme.provider';
 import { cn } from '@/lib/utils';
@@ -36,6 +37,7 @@ export default function LocaleLayout({ children, params: { locale } }: React.Pro
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar locale={locale} />
           {children}
+          <Footer params={{ locale }} />
         </ThemeProvider>
       </body>
     </html>

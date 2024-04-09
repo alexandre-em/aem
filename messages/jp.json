@@ -3,9 +3,11 @@
     "description": "アレクサンドル・エムのポートフォリオサイトです"
   },
   "Index": {
-    "title": "こんにちは！",
+    "title": "こんにちは、",
     "subtitle": "アレクサンドルと申します。",
     "description": "パリ在住のフルスタックエンジニア。",
+    "resume": "履歴書",
+    "projects": "制作",
 
     "experience": "経歴",
     "exp-monk-title": "Monk.ai",
@@ -22,8 +24,12 @@
 
     "skills": "技術"
   },
+  "NotFound": {
+    "title": "このページは利用できません。申し訳ありません。"
+  },
   "Footer": {
-    "signIn": "ログイン",
-    "signOut": "ログアウト"
+    "name": "アレクサンドル・エム",
+    "job": "フルスタックエンジニア",
+    "contact": "ご連絡はこちらにて"
   }
 }
