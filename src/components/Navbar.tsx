@@ -1,8 +1,7 @@
 'use client';
-import { Menu, Moon, PawPrint, Sun } from 'lucide-react';
+import { Menu, PawPrint } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -19,34 +18,13 @@ import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger
 import { cn } from '@/lib/utils';
 import { useRouter } from '@/navigation';
 
+import DarkModeButton from './DarkModeButton';
+
 const emojiLang = {
   en: '🇬🇧',
   fr: '🇫🇷',
   jp: '🇯🇵',
 };
-
-function DarkModeButton({ className }: WithClassNameComponentType) {
-  const { setTheme, theme, systemTheme } = useTheme();
-
-  const handleSelectTheme = useCallback(() => {
-    let newTheme;
-
-    if (theme === 'system') {
-      newTheme = systemTheme === 'dark' ? 'light' : 'dark';
-    } else {
-      newTheme = theme === 'dark' ? 'light' : 'dark';
-    }
-
-    setTheme(newTheme);
-  }, [theme, setTheme, systemTheme]);
-
-  return (
-    <Button variant="outline" size="icon" onClick={handleSelectTheme} className={cn('ml-2', className)}>
-      <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Sun className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-    </Button>
-  );
-}
 
 function LanguageSwitch({ locale, className }: NavbarComponentsProps & WithClassNameComponentType) {
   const pathName = usePathname();
