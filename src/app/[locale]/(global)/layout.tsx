@@ -1,7 +1,7 @@
 import { Inter as FontSans } from 'next/font/google';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
-import '../globals.css';
+import '../../globals.css';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
