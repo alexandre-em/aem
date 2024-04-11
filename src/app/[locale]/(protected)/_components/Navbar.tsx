@@ -15,8 +15,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
 
 function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLLIElement> }) {
   const { logOut } = useAuth();
@@ -67,6 +67,7 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
 }
 
 export default function Navbar() {
+  const { user } = useAuth();
   const [open, setOpen] = useState<boolean | undefined>(false);
 
   return (
@@ -82,31 +83,33 @@ export default function Navbar() {
         </div>
 
         {/*Right Laptop*/}
-        <NavbarMenu className="hidden sm:flex" />
+        {user?.accessToken && <NavbarMenu className="hidden sm:flex" />}
 
         {/*Right Smartphone*/}
-        <Sheet open={open} onOpenChange={(value) => setOpen(value)}>
-          <SheetTrigger className="flex justify-center items-center sm:hidden w-[46px] h-[46px] rounded-2xl">
-            <Menu />
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader className="mb-3">
-              <SheetTitle>Dashboard</SheetTitle>
-              <Separator />
-            </SheetHeader>
-            <NavbarMenu className="flex flex-col w-full" onClick={() => setOpen(false)} />
-            <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
-              <Link href="/" locale="en">
-                <Button variant="ghost" className="text-primary-foreground">
-                  Logout
-                </Button>
-              </Link>
-              <div className="flex">
-                <DarkModeButton className="mr-3" />
-              </div>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
+        {user?.accessToken && (
+          <Sheet open={open} onOpenChange={(value) => setOpen(value)}>
+            <SheetTrigger className="flex justify-center items-center sm:hidden w-[46px] h-[46px] rounded-2xl">
+              <Menu />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader className="mb-3">
+                <SheetTitle>Dashboard</SheetTitle>
+                <Separator />
+              </SheetHeader>
+              <NavbarMenu className="flex flex-col w-full" onClick={() => setOpen(false)} />
+              <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
+                <Link href="/" locale="en">
+                  <Button variant="ghost" className="text-primary-foreground">
+                    Logout
+                  </Button>
+                </Link>
+                <div className="flex">
+                  <DarkModeButton className="mr-3" />
+                </div>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        )}
       </NavigationMenu>
       <Separator />
     </>
