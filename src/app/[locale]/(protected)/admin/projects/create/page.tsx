@@ -25,13 +25,16 @@ export default function CreateProject() {
             {images.length > 0 && (
               <Carousel className="w-[calc(100%-64px)] max-w-sm">
                 <CarouselContent className="-ml-1">
-                  {images.map((img: File, i) => (
-                    <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                      <div className="p-1 flex justify-center items-center h-full">
-                        <img src={URL.createObjectURL(img)} alt="img" width="200" className="m-2 object-contain" />
-                      </div>
-                    </CarouselItem>
-                  ))}
+                  {images.map(
+                    (img: File | null, i) =>
+                      img && (
+                        <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                          <div className="p-1 flex justify-center items-center h-full">
+                            <img src={URL.createObjectURL(img)} alt="img" width="200" className="m-2 object-contain" />
+                          </div>
+                        </CarouselItem>
+                      )
+                  )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />

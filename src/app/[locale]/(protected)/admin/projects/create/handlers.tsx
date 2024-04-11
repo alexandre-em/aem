@@ -6,24 +6,26 @@ import { ImageService, ProjectService } from '@/services';
 
 export default function useHandler() {
   const { toast } = useToast();
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<(File | null)[]>([]);
   const [formData, setFormData] = useState<Partial<ProjectType>>();
   const [imagesWithMin, setImagesWithMin] = useState<ImageMin[]>([]);
 
   const handleSelectImage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (images.length + e.target.files?.length > 5)
+      if (images.length + e.target.files!.length > 5)
         toast({ title: 'Invalid input', description: 'Please select up to 5 pictures max', variant: 'destructive' });
 
-      if (e.target.files.length > 0) {
-        setImages((prev) => (prev.length + e.target.files?.length < 6 ? [...prev, ...e.target.files] : prev));
+      if (e.target.files && e.target.files.length > 0) {
+        setImages((prev) => (prev.length + e.target.files!.length < 6 ? [...prev, ...e.target.files!] : prev));
       }
     },
     [toast, images.length]
   );
 
   const handleSubmitImage = useCallback(() => {
-    images.forEach(async (img: File, id) => {
+    images.forEach(async (img: File | null, id: number) => {
+      if (!img) return;
+
       // Resize images to create miniature then store
       const min = new Promise((resolve) => {
         ImageService.generateMiniature(img).then((minImg) => {
