@@ -14,11 +14,7 @@ export default function MarkdownReader({ children }: { children: string }) {
     <Card className="flex-auto mt-5 p-5">
       <CardContent>
         <article>
-          <Markdown
-            className="prose prose-invert min-w-full"
-            components={options}
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeSanitize, [rehypeExternalLinks, { content: { type: 'text', value: '🔗' } }]]}>
+          <Markdown className="prose prose-invert min-w-full text-primary" components={options}>
             {children}
           </Markdown>
         </article>

@@ -77,7 +77,7 @@ export default function useHandler() {
         return;
       }
 
-      const formDataWImages = { ...formData, images: imagesWithMin } as ProjectType;
+      const formDataWImages = { ...formData, images: imagesWithMin, createdAt: new Date() } as ProjectType;
 
       ProjectService.createProject(formDataWImages).then(({ id, error }) => {
         if (error) {

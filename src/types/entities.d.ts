@@ -14,6 +14,7 @@ type ProjectType = {
   content: string;
   github?: string;
   demo?: string;
+  createdAt: Date;
 };
 
 type CommentType = {
@@ -24,7 +25,7 @@ type CommentType = {
 };
 
 type BlogType = {
-  id: string;
+  id?: string;
   title: string;
   createdAt: Date;
   submail: ImageMin;
@@ -34,7 +35,12 @@ type BlogType = {
 };
 
 type PhotoType = {
+  id?: string;
   image: ImageMin;
   title: string;
   date: Date;
+  createdAt: Date;
 };
+
+type EntityTypes = 'projects' | 'blog' | 'gallery';
+type EntityType = ProjectType | BlogType | PhotoType;
