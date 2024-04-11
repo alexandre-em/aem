@@ -1,10 +1,11 @@
 type ImageMin = {
+  id: number;
   url: string;
-  miniature: Buffer;
+  miniature: string;
 };
 
 type ProjectType = {
-  id: string;
+  id?: string;
   title: string;
   dateStart: Date;
   dateEnd: Date | null;
