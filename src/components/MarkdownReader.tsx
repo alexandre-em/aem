@@ -4,21 +4,34 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm';
 
+import { cn } from '@/lib/utils';
+
 import { CodeBlock, Pre } from './Code';
-import { Card, CardContent } from './ui/card';
+import LazyImage from './LazyImage';
+import * as Typ from './Typing';
 
-const options = { code: CodeBlock, pre: Pre };
+const options = {
+  code: CodeBlock,
+  pre: Pre,
+  h1: Typ.TitleH1,
+  h2: Typ.TitleH2,
+  h3: Typ.TitleH3,
+  h4: Typ.TitleH4,
+  a: Typ.Link,
+  strong: Typ.Bold,
+  img: LazyImage,
+};
 
-export default function MarkdownReader({ children }: { children: string }) {
+export default function MarkdownReader({ content, className }: MarkdownReaderProps) {
   return (
-    <Card className="flex-auto mt-5 p-5">
-      <CardContent>
-        <article>
-          <Markdown className="prose prose-invert min-w-full text-primary" components={options}>
-            {children}
-          </Markdown>
-        </article>
-      </CardContent>
-    </Card>
+    <article className={cn('text-red-500', className)}>
+      <Markdown
+        className="prose prose-invert text-primary"
+        components={options}
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSanitize, [rehypeExternalLinks, { content: { type: 'text', value: '🔗' } }]]}>
+        {content}
+      </Markdown>
+    </article>
   );
 }

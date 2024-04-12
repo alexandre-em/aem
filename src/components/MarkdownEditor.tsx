@@ -1,25 +1,23 @@
 'use client';
 import { ImageUp } from 'lucide-react';
-import React, { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { ImageService } from '@/services';
 
-import MarkdownReader from './MarkdownReader';
 import { Button } from './ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from './ui/drawer';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { toast } from './ui/use-toast';
 
-export default forwardRef(function MarkdownEditor({}, ref) {
-  const [content, setContent] = useState('');
+export default function MarkdownEditor({ content, onChange }: MarkdownEditorProps) {
   const [image, setImage] = useState<File | null>(null);
 
-  const onUploadFinish = useCallback(({ error, result }: { error?: string; result: string }) => {
-    if (error) {
+  const onUploadFinish = useCallback((imageMin: ImageMin | Error) => {
+    if (imageMin instanceof Error) {
       toast({ title: 'An error occured...', variant: 'destructive', description: 'The image upload failed' });
     } else {
-      navigator.clipboard.writeText(`![image](${result})`).then(() => {
+      navigator.clipboard.writeText(`![image](${imageMin.url})`).then(() => {
         toast({ title: 'Copied!', description: 'The image link has been copied to the clipboard !' });
       });
     }
@@ -33,19 +31,12 @@ export default forwardRef(function MarkdownEditor({}, ref) {
 
   const handleSubmitImage = useCallback(() => {
     if (image) {
-      image.arrayBuffer().then((buffer: ArrayBuffer) => {
-        ImageService.uploadImage(image.name, buffer).then(onUploadFinish);
-      });
+      ImageService.uploadImageWithMiniature(image, 0).then(onUploadFinish);
     }
   }, [image, onUploadFinish]);
 
-  useImperativeHandle(ref, () => ({
-    content,
-    setContent,
-  }));
-
   return (
-    <div>
+    <div className="w-full max-w-3xl">
       <div>
         <Drawer>
           <DrawerTrigger asChild>
@@ -65,22 +56,19 @@ export default forwardRef(function MarkdownEditor({}, ref) {
           </DrawerContent>
         </Drawer>
       </div>
-      <div className="flex flex-wrap h-full">
+      <div className="flex flex-wrap h-full w-full">
         {/* Editor */}
-        <div className="flex-auto max-w-3xl mt-5 mr-5 min-w-56 w-1/2 h-full">
+        <div className="flex-auto mt-5 mr-5 min-w-56 w-1/2 h-full">
           <Textarea
             placeholder="Type your content here"
             required
             autoFocus
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => onChange(e.target.value)}
             rows={30}
           />
         </div>
-
-        {/* Preview */}
-        <MarkdownReader>{content}</MarkdownReader>
       </div>
     </div>
   );
-});
+}

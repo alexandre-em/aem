@@ -26,33 +26,14 @@ export default function useHandler() {
     images.forEach(async (img: File | null, id: number) => {
       if (!img) return;
 
-      // Resize images to create miniature then store
-      const min = new Promise((resolve) => {
-        ImageService.generateMiniature(img).then((minImg) => {
-          (minImg as File).arrayBuffer().then((buffer: ArrayBuffer) => {
-            ImageService.uploadImage(img.name, buffer).then((res) => resolve(res.result));
-          });
-        });
-      });
+      const newImageWithMin = await ImageService.uploadImageWithMiniature(img, id);
 
-      // Store images on firestore
-      const url = new Promise((resolve) => {
-        img.arrayBuffer().then((buffer: ArrayBuffer) => {
-          ImageService.uploadImage(img.name, buffer).then((res) => resolve(res.result));
-        });
-      });
+      if (newImageWithMin instanceof Error) {
+        toast({ title: 'Upload failed', variant: 'destructive' });
+        return;
+      }
 
-      // Wait for the two promises to finish
-      const promises = await Promise.allSettled([url, min]);
-      const isInvalid = promises.find((promise) => promise.status === 'rejected');
-
-      // Checking if there's failures
-      if (isInvalid) toast({ title: 'Upload failed', variant: 'destructive' });
-
-      const fullfilledUrl = promises[0] as PromiseFulfilledResult<string>;
-      const fullfilledMin = promises[1] as PromiseFulfilledResult<string>;
-
-      setImagesWithMin((prev) => [...prev, { url: fullfilledUrl.value, miniature: fullfilledMin.value, id }]);
+      setImagesWithMin((prev) => [...prev, newImageWithMin]);
     });
   }, [images, toast]);
 
