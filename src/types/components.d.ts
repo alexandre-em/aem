@@ -1,5 +1,6 @@
 type LazyImageProps = {
   src: string;
+  miniature?: string;
 };
 
 type LinkedCardItemProps = {
@@ -13,3 +14,12 @@ type LinkedCardItemProps = {
 type NavbarComponentsProps = {
   locale: 'en' | 'fr' | 'jp';
 };
+
+type MarkdownEditorProps = {
+  content: string;
+  onChange: (content: string) => void;
+};
+
+type MarkdownReaderProps = {
+  content: string;
+} & Partial<WithClassNameComponentType>;

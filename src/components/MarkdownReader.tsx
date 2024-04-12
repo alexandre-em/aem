@@ -19,7 +19,7 @@ const options = {
   h4: Typ.TitleH4,
   a: Typ.Link,
   strong: Typ.Bold,
-  img: LazyImage,
+  img: ({ ...props }) => <LazyImage src={props.src} className={props.className as string} {...props} />,
 };
 
 export default function MarkdownReader({ content, className }: MarkdownReaderProps) {

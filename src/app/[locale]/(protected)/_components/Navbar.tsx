@@ -1,7 +1,7 @@
 'use client';
 import { Menu, PawPrint } from 'lucide-react';
 import Link from 'next/link';
-import React, { MouseEventHandler, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import DarkModeButton from '@/components/DarkModeButton';
 import { useAuth } from '@/components/providers/google.provider';

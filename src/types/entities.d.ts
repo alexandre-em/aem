@@ -32,6 +32,7 @@ type BlogType = {
   content: string;
   comments: CommentType[];
   like: number;
+  tags: string[];
 };
 
 type PhotoType = {

@@ -16,7 +16,11 @@ export default function useHandler() {
         toast({ title: 'Invalid input', description: 'Please select up to 5 pictures max', variant: 'destructive' });
 
       if (e.target.files && e.target.files.length > 0) {
-        setImages((prev) => (prev.length + e.target.files!.length < 6 ? [...prev, ...e.target.files!] : prev));
+        setImages((prev) =>
+          prev.length + e.target.files!.length < 6
+            ? [...prev, ...new Array(e.target.files!.length).fill(null).map((_, i) => e.target.files!.item(i))]
+            : prev
+        );
       }
     },
     [toast, images.length]
@@ -69,7 +73,7 @@ export default function useHandler() {
         }
       });
     },
-    [formData, imagesWithMin, toast]
+    [formData, imagesWithMin, toast, images.length]
   );
 
   // Success upload notification

@@ -90,6 +90,10 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           url="https://cfa-insta.fr/analyste-developpeur/"
           src="/images/insta.jpg"
         />
+
+        {/* Github/Leetcode stats */}
+        <Separator className="mt-3 mb-2" />
+        <ThemedStats />
       </div>
     </main>
   );

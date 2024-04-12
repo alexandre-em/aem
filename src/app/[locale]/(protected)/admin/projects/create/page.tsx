@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -30,7 +31,13 @@ export default function CreateProject() {
                       img && (
                         <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
                           <div className="p-1 flex justify-center items-center h-full">
-                            <img src={URL.createObjectURL(img)} alt="img" width="200" className="m-2 object-contain" />
+                            <Image
+                              src={URL.createObjectURL(img)}
+                              alt="img"
+                              width="200"
+                              height="200"
+                              className="m-2 object-contain"
+                            />
                           </div>
                         </CarouselItem>
                       )

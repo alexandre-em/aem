@@ -25,7 +25,7 @@ export default function AdminPage() {
         variant: 'destructive',
       });
     }
-  }, [googleSignIn]);
+  }, [googleSignIn, toast]);
 
   useEffect(() => {
     if (user?.accessToken) {

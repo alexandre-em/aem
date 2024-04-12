@@ -100,7 +100,7 @@ export const getByField = async (key: string, value: string) => {
 export const createProject = async (data: ProjectType) => {
   let result = null;
   let error = null;
-  const id = (data.id as string) || crypto.randomUUID();
+  const id = crypto.randomUUID();
 
   try {
     result = await setDoc(doc(db, COLLECTIONS_NAME.PROJECTS, id), data, {
