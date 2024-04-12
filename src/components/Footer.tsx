@@ -13,7 +13,7 @@ export default function Footer({ params: { locale } }: LocaleParamsType) {
     <footer className="w-full hidden xsm:block">
       <Card className="m-16 rounded-2xl flex justify-between items-center">
         <div className="flex items-center m-5">
-          <LazyImage className="bg-[url('/images/photo_sm.jpg')] w-20 rounded-full" src="/images/photo.jpg" />
+          <LazyImage className="w-20 rounded-full" miniature="/images/photo_sm.jpg" src="/images/photo.jpg" />
           <CardHeader>
             <CardTitle>{t('name')}</CardTitle>
             <CardDescription>{t('job')}</CardDescription>

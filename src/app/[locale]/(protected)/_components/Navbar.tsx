@@ -18,7 +18,7 @@ import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
-function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLLIElement> }) {
+function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: () => void }) {
   const { logOut } = useAuth();
   const { toast } = useToast();
 

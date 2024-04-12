@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
 
 import { Button } from './ui/button';
@@ -13,7 +14,7 @@ export default function LinksGroup() {
       </a>
       <a href="https://leetcode.com/aem22" target="_blank">
         <Button variant="outline" className="mr-2 rounded-full w-14 h-14">
-          <img src="/leetcode.svg" alt="leetcode" className="invert" />
+          <Image width="60" height="60" src="/leetcode.svg" alt="" className="invert" />
         </Button>
       </a>
       <a href="https://www.linkedin.com/in/em-a" target="_blank">

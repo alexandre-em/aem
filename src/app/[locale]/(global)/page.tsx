@@ -21,7 +21,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
     <main className="flex flex-wrap min-h-[calc(100dvh-352px)] xsm:min-h-[calc(100dvh-57px)] justify-around p-12">
       {/* Left side */}
       <div className="flex flex-col items-center sm:items-start">
-        <LazyImage className="bg-[url('/images/photo_sm.jpg')] w-44" src="/images/photo.jpg" />
+        <LazyImage className="w-44 rounded-full" miniature={'/images/photo_sm.jpg'} src="/images/photo.jpg" />
         <h1 className="text-3xl font-black mt-4">{t('title')}</h1>
         <h2 className="text-lg font-bold">{t('subtitle')}</h2>
         <p>{t('description')}</p>
@@ -90,10 +90,6 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           url="https://cfa-insta.fr/analyste-developpeur/"
           src="/images/insta.jpg"
         />
-
-        {/* Github/Leetcode stats */}
-        <Separator className="mt-3 mb-2" />
-        <ThemedStats />
       </div>
     </main>
   );

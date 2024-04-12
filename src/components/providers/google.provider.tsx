@@ -4,12 +4,11 @@ import { redirect, usePathname } from 'next/navigation';
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 
 import { auth } from '@/lib/firebase';
-import { toast } from '../ui/use-toast';
 
 const AuthContext = createContext<AuthProviderValueType>({
   user: null,
-  googleSignIn: () => {},
-  logOut: () => {},
+  googleSignIn: () => { },
+  logOut: () => { },
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
