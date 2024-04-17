@@ -47,6 +47,13 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
   return (
     <NavigationMenuList className={className}>
       <NavigationMenuItem className="m-1 w-full">
+        <Link className="sm:w-full" href={`/admin/dashboard`} legacyBehavior passHref>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Home
+          </NavigationMenuLink>
+        </Link>
+      </NavigationMenuItem>
+      <NavigationMenuItem className="m-1 w-full">
         <Link className="sm:w-full" href={`/admin/projects`} legacyBehavior passHref>
           <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
             Works

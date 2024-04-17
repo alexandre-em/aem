@@ -10,18 +10,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { toast } from '@/components/ui/use-toast';
 import { Link } from '@/navigation';
-import { formatDate } from '@/services';
+import { ProjectService, formatDate } from '@/services';
 
-import { toast } from './use-toast';
+const services = {
+  projects: ProjectService,
+  gallery: ProjectService, // TODO: Replace by the gallery service
+  blog: ProjectService, // TODO: Replace by blog service
+};
 
-function DeleteDropdownItem({ id }: { id: string }) {
+function DeleteDropdownItem({ id, type }: { id: string; type: EntityTypes }) {
   return (
     <DropdownMenuItem
       variant="destructive"
       onClick={() => {
-        // await deleteProduct(id)
-        toast({ title: 'Successfully deleted', description: id, variant: 'destructive' });
+        services[type]
+          .deleteOne(id)
+          .then((res) => {
+            if (res.result) toast({ title: 'Successfully deleted', description: id });
+            else toast({ title: 'Failed to delete document...', description: id, variant: 'destructive' });
+          })
+          .catch(() => toast({ title: 'Failed to delete document...', description: id, variant: 'destructive' }));
       }}>
       Delete
     </DropdownMenuItem>
@@ -59,7 +69,7 @@ export default function EntityTable({ type, entities }: { type: EntityTypes; ent
                     <Link href={`/admin/${type}/${entity.id}`}>Edit description</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DeleteDropdownItem id={entity.id!} />
+                  <DeleteDropdownItem id={entity.id!} type={type} />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

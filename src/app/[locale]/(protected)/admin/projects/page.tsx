@@ -1,9 +1,10 @@
-import Link from 'next/link';
 import React from 'react';
 
 import { buttonVariants } from '@/components/ui/button';
-import EntityTable from '@/components/ui/EntityTable';
+import { Link } from '@/navigation';
 import { ProjectService } from '@/services';
+
+import EntityTable from '../../_components/EntityTable';
 
 export default async function ProjectDashboard({ searchParams: { limit } }: IdParamsType) {
   const { result } = await ProjectService.getAll(parseInt(limit as string), undefined, { value: 'dateStart', order: 'desc' });
