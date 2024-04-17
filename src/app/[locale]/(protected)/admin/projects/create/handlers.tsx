@@ -64,11 +64,11 @@ export default function useHandler() {
 
       const formDataWImages = { ...formData, images: imagesWithMin, createdAt: new Date() } as ProjectType;
 
-      ProjectService.createProject(formDataWImages).then(({ id, error }) => {
+      ProjectService.createOne(formDataWImages).then(({ id, error }) => {
         if (error) {
           toast({ title: 'An error occurred...', description: 'There is an error while storing info', variant: 'destructive' });
         } else {
-          toast({ title: 'Project successfully added !', description: id });
+          toast({ title: 'Project successfully added !', description: id, variant: 'success' });
           setFormData((prev) => ({ ...prev, id }));
         }
       });

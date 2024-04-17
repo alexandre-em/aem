@@ -16,6 +16,7 @@ export default function AdminPage() {
       toast({
         description: 'Welcome back !',
         title: `Successfuly authenticated`,
+        variant: 'success',
       });
 
       await createSession(user.user.uid);
