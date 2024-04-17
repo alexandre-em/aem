@@ -1,5 +1,9 @@
-export * as ProjectService from './project';
+import { ProjectService as PService } from './project';
+
 export * as ImageService from './image';
+export * as MessageService from './message';
+
+export const ProjectService = new PService();
 
 export const COLLECTIONS_NAME = {
   PROJECTS: 'projects',
