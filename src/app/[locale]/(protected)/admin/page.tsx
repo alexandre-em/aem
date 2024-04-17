@@ -1,37 +1,33 @@
 'use client';
-import { redirect } from 'next/navigation';
-import React, { useCallback, useEffect } from 'react';
+import { UserCredential } from 'firebase/auth';
+import React, { useCallback } from 'react';
 
-import { useAuth } from '@/components/providers/google.provider';
+import { createSession } from '@/actions/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
+import googleAuthInstance from '@/services/auth';
 
 export default function AdminPage() {
-  const { user, googleSignIn } = useAuth();
-  const { toast } = useToast();
-
   const handleSignIn = useCallback(async () => {
     try {
-      await googleSignIn();
+      const user: UserCredential = await googleAuthInstance.signIn();
+
       toast({
         description: 'Welcome back !',
         title: `Successfuly authenticated`,
       });
+
+      await createSession(user.user.uid);
     } catch (error) {
       toast({
         title: 'An error occurred while signing in',
         description: `${error}`,
         variant: 'destructive',
       });
+      console.log(error);
     }
-  }, [googleSignIn, toast]);
-
-  useEffect(() => {
-    if (user?.accessToken) {
-      redirect('/admin/dashboard');
-    }
-  }, [user]);
+  }, []);
 
   return (
     <main className="min-h-[calc(100dvh-57px)] flex justify-center items-center">

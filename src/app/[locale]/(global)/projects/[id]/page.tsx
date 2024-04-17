@@ -16,7 +16,7 @@ export default async function ProjectId({ params: { id } }: IdParamsType) {
 
   if (!result) return 'Loading...';
   // TODO: Manage error
-  if (error) return <p>Error</p>;
+  if (error) return <div>Error</div>;
   if (!result?.data()) return notFound();
 
   return (

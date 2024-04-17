@@ -1,10 +1,12 @@
 'use client';
+import { User } from 'firebase/auth';
 import { Menu, PawPrint } from 'lucide-react';
 import Link from 'next/link';
 import React, { useCallback, useState } from 'react';
 
+import { removeSession } from '@/actions/auth';
 import DarkModeButton from '@/components/DarkModeButton';
-import { useAuth } from '@/components/providers/google.provider';
+import useAuth from '@/components/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -17,14 +19,15 @@ import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import googleAuthInstance from '@/services/auth';
 
 function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: () => void }) {
-  const { logOut } = useAuth();
+  const user: User | null = useAuth();
   const { toast } = useToast();
 
   const handleSignOut = useCallback(async () => {
     try {
-      await logOut();
+      await googleAuthInstance.signOut();
       if (onClick) {
         onClick();
       }
@@ -33,10 +36,13 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
         description: 'See you soon !',
         title: 'You have been successfully logged out ',
       });
+      await removeSession();
     } catch (error) {
       console.log(error);
     }
-  }, [logOut, onClick, toast]);
+  }, [onClick, toast]);
+
+  if (!user?.uid) return null;
 
   return (
     <NavigationMenuList className={className}>
@@ -67,7 +73,7 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
 }
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const user: User | null = useAuth();
   const [open, setOpen] = useState<boolean | undefined>(false);
 
   return (
@@ -83,10 +89,10 @@ export default function Navbar() {
         </div>
 
         {/*Right Laptop*/}
-        {user?.accessToken && <NavbarMenu className="hidden sm:flex" />}
+        {user?.uid && <NavbarMenu className="hidden sm:flex" />}
 
         {/*Right Smartphone*/}
-        {user?.accessToken && (
+        {user?.uid && (
           <Sheet open={open} onOpenChange={(value) => setOpen(value)}>
             <SheetTrigger className="flex justify-center items-center sm:hidden w-[46px] h-[46px] rounded-2xl">
               <Menu />

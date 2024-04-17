@@ -20,7 +20,7 @@ export default async function projects({ params: { locale }, searchParams: { lim
 
   // TODO: Manage error
   if (result === undefined) return 'Loading...';
-  if (error) return <p>Error</p>;
+  if (error) return <div>Error</div>;
 
   return (
     <main className="min-h-[calc(100dvh-57px)] xsm:min-h-[calc(100dvh-352px)] p-5">
