@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
@@ -6,8 +5,10 @@ import LazyImage from '@/components/LazyImage';
 import LinkedCardItem from '@/components/LinkedCardItem';
 import LinksGroup from '@/components/LinksGroup';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
+import { Link } from '@/navigation';
 
 import ThemedStats from './_components/ThemedStats';
 
@@ -38,14 +39,15 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
             Passionate creating great experiences for Digital Product
           </p>
           <div className="flex flex-wrap justify-evenly m-2 w-full sm:justify-start">
-            <Button variant="outline" className="mr-5 mt-2 mb-2">
-              <a href="https://drive.google.com/file/d/1yiToT9R1EXYW18tS5wx3KMM2ZFhmPu86/view?pli=1" target="_blank">
-                {t('resume')}
-              </a>
-            </Button>
-            <Button className="m-2">
-              <Link href="/projects">{t('projects')}</Link>
-            </Button>
+            <a
+              href="https://drive.google.com/file/d/1yiToT9R1EXYW18tS5wx3KMM2ZFhmPu86/view?pli=1"
+              target="_blank"
+              className={cn(buttonVariants({ variant: 'outline' }), 'mr-5 mt-2 mb-2')}>
+              {t('resume')}
+            </a>
+            <Link href="/projects" className={cn(buttonVariants({}), 'm-2')}>
+              {t('projects')}
+            </Link>
           </div>
         </div>
 

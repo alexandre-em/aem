@@ -1,7 +1,7 @@
-import { redirect } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
+import { redirect } from '@/navigation';
 import { ImageService, ProjectService } from '@/services';
 
 export default function useHandler() {

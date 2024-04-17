@@ -1,6 +1,5 @@
 'use client';
 import { MoreVertical } from 'lucide-react';
-import Link from 'next/link';
 import React from 'react';
 
 import {
@@ -11,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Link } from '@/navigation';
 import { formatDate } from '@/services';
 
 import { toast } from './use-toast';

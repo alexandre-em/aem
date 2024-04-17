@@ -1,10 +1,8 @@
 'use client';
 import { Menu, PawPrint } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { useRouter } from '@/navigation';
+import { Link, usePathname, useRouter } from '@/navigation';
 
 import DarkModeButton from './DarkModeButton';
 
@@ -58,30 +56,38 @@ function NavbarMenu({
   locale,
   className,
   onClick,
-}: NavbarComponentsProps & WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLLIElement> }) {
+}: NavbarComponentsProps & WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLAnchorElement> }) {
   return (
     <NavigationMenuList className={className}>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link className="sm:w-full" href={`/projects`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Works</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Works
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link href={`/gallery`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Gallery</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Gallery
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link href={`/blog`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Blog</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Blog
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
-        <Button className="sm:rounded-3xl rounded-md m-1 w-full">
-          <Link href={`/contact`} locale={locale} legacyBehavior passHref>
-            Contact
-          </Link>
-        </Button>
+      <NavigationMenuItem className="m-1 w-full">
+        <Link
+          onClick={onClick}
+          href={`/contact`}
+          locale={locale}
+          className={cn(buttonVariants(), 'sm:rounded-3xl rounded-md m-1 w-full')}>
+          Contact
+        </Link>
       </NavigationMenuItem>
     </NavigationMenuList>
   );
@@ -118,10 +124,11 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
             </SheetHeader>
             <NavbarMenu locale={locale} className="flex flex-col w-full" onClick={() => setOpen(false)} />
             <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
-              <Link href="/admin" locale="en">
-                <Button variant="ghost" className="text-primary-foreground">
-                  Admin
-                </Button>
+              <Link
+                href="/admin"
+                locale="en"
+                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'text-primary-foreground')}>
+                Admin
               </Link>
               <div className="flex">
                 <DarkModeButton className="mr-3" />

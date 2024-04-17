@@ -1,13 +1,12 @@
 'use client';
 import { User } from 'firebase/auth';
 import { Menu, PawPrint } from 'lucide-react';
-import Link from 'next/link';
 import React, { useCallback, useState } from 'react';
 
 import { removeSession } from '@/actions/auth';
 import DarkModeButton from '@/components/DarkModeButton';
 import useAuth from '@/components/hooks/useAuth';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -19,6 +18,7 @@ import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import { Link } from '@/navigation';
 import googleAuthInstance from '@/services/auth';
 
 function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: () => void }) {
@@ -46,26 +46,30 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
 
   return (
     <NavigationMenuList className={className}>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link className="sm:w-full" href={`/admin/projects`} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Works</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Works
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link href={`/admin/gallery`} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Gallery</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Gallery
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={onClick}>
+      <NavigationMenuItem className="m-1 w-full">
         <Link href={`/admin/blog`} legacyBehavior passHref>
-          <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>Blog</NavigationMenuLink>
+          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+            Blog
+          </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full" onClick={handleSignOut}>
         <Button className="sm:rounded-3xl rounded-md m-1 w-full">
-          <Link href={`/`} legacyBehavior passHref>
-            Logout
-          </Link>
+          <Link href={`/`}>Logout</Link>
         </Button>
       </NavigationMenuItem>
     </NavigationMenuList>
@@ -104,10 +108,8 @@ export default function Navbar() {
               </SheetHeader>
               <NavbarMenu className="flex flex-col w-full" onClick={() => setOpen(false)} />
               <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
-                <Link href="/" locale="en">
-                  <Button variant="ghost" className="text-primary-foreground">
-                    Logout
-                  </Button>
+                <Link href="/" locale="en" className={cn(buttonVariants({ variant: 'ghost' }), 'text-primary-foreground')}>
+                  Logout
                 </Link>
                 <div className="flex">
                   <DarkModeButton className="mr-3" />

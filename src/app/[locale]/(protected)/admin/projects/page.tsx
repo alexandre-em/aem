@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import EntityTable from '@/components/ui/EntityTable';
 import { ProjectService } from '@/services';
 
@@ -12,8 +12,8 @@ export default async function ProjectDashboard({ searchParams: { limit } }: IdPa
     <main className="flex flex-col flex-wrap p-5">
       <div className="flex flex-wrap justify-between">
         <h1 className="text-3xl font-black">Projects Dashboard</h1>
-        <Link href="/admin/projects/create">
-          <Button>Add project</Button>
+        <Link href="/admin/projects/create" className={buttonVariants()}>
+          Add project
         </Link>
       </div>
 
