@@ -5,7 +5,7 @@ import LazyImage from '@/components/LazyImage';
 import LinkedCardItem from '@/components/LinkedCardItem';
 import LinksGroup from '@/components/LinksGroup';
 import { Badge } from '@/components/ui/badge';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { Link } from '@/navigation';

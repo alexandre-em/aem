@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "build": "next build",
     "start": "next start",
     "start:dev": "next dev",
@@ -32,6 +33,7 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
     "react-image-file-resizer": "^0.4.8",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.5.0",
@@ -51,6 +53,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-google-recaptcha": "^2.1.9",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "autoprefixer": "^10.0.1",
     "eslint": "^8.55.0",

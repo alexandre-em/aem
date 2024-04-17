@@ -43,5 +43,12 @@ type PhotoType = {
   createdAt: Date;
 };
 
+type MessageType = {
+  id?: string;
+  email: string;
+  name: string;
+  message: string;
+};
+
 type EntityTypes = 'projects' | 'blog' | 'gallery';
 type EntityType = ProjectType | BlogType | PhotoType;
