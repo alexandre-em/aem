@@ -12,8 +12,8 @@ export default function LazyImage({ className, miniature, src, ...props }: WithC
       ? miniature
       : src.split(urlSplitted[urlSplitted.length - 1])[0] + `min_${urlSplitted[urlSplitted.length - 1]}`;
 
-    return { background: `url('${url}')`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' };
-  }, [src, miniature]);
+    return isLoaded ? {} : { background: `url('${url}')`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' };
+  }, [src, miniature, isLoaded]);
 
   const classNameImageLoaded = useMemo(
     () =>

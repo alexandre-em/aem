@@ -7,7 +7,6 @@ import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
 
 import { CodeBlock, Pre } from './Code';
-import LazyImage from './LazyImage';
 import * as Typ from './Typing';
 
 const options = {
@@ -19,7 +18,6 @@ const options = {
   h4: Typ.TitleH4,
   a: Typ.Link,
   strong: Typ.Bold,
-  img: ({ ...props }) => <LazyImage src={props.src} className={props.className as string} {...props} />,
 };
 
 export default function MarkdownReader({ content, className }: MarkdownReaderProps) {
