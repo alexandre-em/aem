@@ -14,3 +14,13 @@ export const COLLECTIONS_NAME = {
 export const formatDate = (date: Date): string => {
   return date.toISOString().split('T')[0].replace(/-/g, '/');
 };
+
+export const formatDateWithTime = (date: Date): string => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+  const strTime = hours + ':' + minutesStr;
+  return (
+    date.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }) + ` at ${strTime}`
+  );
+};

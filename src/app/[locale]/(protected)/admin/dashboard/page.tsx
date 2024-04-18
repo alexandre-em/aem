@@ -12,7 +12,7 @@ import { MessageService, formatDate } from '@/services';
 import MessageDropdownOptions from './_components/MessageDropdownOptions';
 
 export default async function Dashboard({ searchParams: { limit = '10', after = undefined, before = undefined } }: IdParamsType) {
-  const { result, error } = await MessageService.getAll(
+  const { result, error, totalDoc } = await MessageService.getAll(
     parseInt(limit as string),
     { after, before },
     {
@@ -61,7 +61,7 @@ export default async function Dashboard({ searchParams: { limit = '10', after = 
       <Separator className="my-2" />
 
       <div className="flex flex-wrap justify-between items-center">
-        <h2 className="text-2xl font-bold m-2">Messages</h2>
+        <h2 className="text-2xl font-bold m-2">Messages ({totalDoc})</h2>
         <LimitSelect />
       </div>
       {!messages.length && <div className="flex flex-wrap w-full justify-center p-10">No more items...</div>}
