@@ -1,5 +1,4 @@
 'use client';
-import { usePathname } from 'next/navigation';
 import React from 'react';
 
 import {
@@ -10,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { usePathname } from '@/navigation';
 
 type CursorPaginationProps = {
   cursor?: { after?: string; before?: string };

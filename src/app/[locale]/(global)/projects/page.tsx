@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
 import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
+import { Link } from '@/navigation';
 import { ProjectService, formatDate } from '@/services';
 
 export default async function projects({ params: { locale }, searchParams: { limit } }: LocaleParamsType & IdParamsType) {

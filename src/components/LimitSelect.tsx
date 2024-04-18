@@ -1,8 +1,8 @@
 'use client';
-import { redirect, usePathname } from 'next/navigation';
 import React, { useCallback } from 'react';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { redirect, usePathname } from '@/navigation';
 
 export default function LimitSelect() {
   const path = usePathname();

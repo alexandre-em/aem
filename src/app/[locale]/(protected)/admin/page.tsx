@@ -1,6 +1,5 @@
 'use client';
 import { UserCredential } from 'firebase/auth';
-import { redirect } from 'next/navigation';
 import React, { useCallback } from 'react';
 
 import { createSession } from '@/actions/auth';
@@ -8,6 +7,7 @@ import useAuth from '@/components/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
+import { redirect } from '@/navigation';
 import googleAuthInstance from '@/services/auth';
 
 export default function AdminPage() {

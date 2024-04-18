@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
@@ -6,7 +7,6 @@ import { buttonVariants } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { Link } from '@/navigation';
 import { MessageService, formatDate } from '@/services';
 
 import MessageDropdownOptions from './_components/MessageDropdownOptions';

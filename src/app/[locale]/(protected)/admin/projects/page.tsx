@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import React from 'react';
 
 import { buttonVariants } from '@/components/ui/button';
-import { Link } from '@/navigation';
 import { ProjectService } from '@/services';
 
 import EntityTable from '../../_components/EntityTable';
