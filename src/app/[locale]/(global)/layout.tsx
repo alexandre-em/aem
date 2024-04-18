@@ -15,6 +15,25 @@ export async function generateMetadata({ params: { locale } }: LocaleParamsType)
   return {
     title: 'A. Em',
     description: t('description'),
+    keywords: [
+      'fullstack',
+      'developer',
+      'front-end',
+      'back-end',
+      'Java',
+      'React',
+      'Next',
+      'Node',
+      'Nest',
+      'Javascript',
+      'Typescript',
+    ],
+    openGraph: {
+      title: `A. Em's website`,
+      description: t('description'),
+      images: '/images/photo.jpg',
+      url: 'https://alexandre-em.fr',
+    },
   };
 }
 

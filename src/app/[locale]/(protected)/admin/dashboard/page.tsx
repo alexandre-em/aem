@@ -42,7 +42,7 @@ export default async function Dashboard({ searchParams: { limit = '10', after = 
   return (
     <main className="flex flex-col flex-wrap p-5">
       <h1 className="text-3xl font-black">Dashboard</h1>
-      <div className="flex flex-wrap justify-around">
+      <div className="flex flex-wrap">
         {['projects', 'gallery', 'blog'].map((type) => (
           <Card key={type} className="m-3">
             <CardHeader>

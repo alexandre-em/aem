@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
@@ -9,6 +10,31 @@ import { Separator } from '@/components/ui/separator';
 import { ProjectService, formatDate } from '@/services';
 
 import ButtonGroup from './_components/ButtonGroup';
+
+export async function generateMetadata({ params: { id } }: IdParamsType): Promise<Metadata> {
+  // eslint-disable-next-line testing-library/no-await-sync-queries
+  const { result } = await ProjectService.getById(id);
+  const data = result!.data();
+  const project: ProjectType = { ...(data as Omit<ProjectType, 'id'>), id: result!.id };
+
+  return {
+    title: `A. Em | ${project.title}`,
+    description: project.content
+      .replace(/[!@#$%^&*~>]/g, '')
+      .replace(/\[(.*?)\]\(.*?\)/g, '')
+      .substring(0, 150),
+    keywords: project.keywords,
+    openGraph: {
+      title: `A. Em | ${project.title}`,
+      description: project.content
+        .replace(/[!@#$%^&*~>]/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '')
+        .substring(0, 150),
+      images: project.images,
+      url: project.demo || project.github,
+    },
+  };
+}
 
 export default async function ProjectId({ params: { id } }: IdParamsType) {
   // eslint-disable-next-line testing-library/no-await-sync-queries

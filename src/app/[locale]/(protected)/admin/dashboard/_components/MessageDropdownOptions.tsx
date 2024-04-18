@@ -45,9 +45,6 @@ export default function MessageDropdownOptions({ message }: { message: MessageTy
           <DialogTitle>From {message.name}</DialogTitle>
           <DialogDescription>Content: {message.message}</DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button type="submit">Confirm</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -1,6 +1,4 @@
 import {
-  DocumentData,
-  QueryDocumentSnapshot,
   collection as collectionRef,
   deleteDoc,
   doc,
@@ -32,8 +30,8 @@ export class EntityService {
   async getAll(
     lim?: number,
     cursor?: {
-      after?: QueryDocumentSnapshot<DocumentData, DocumentData>;
-      before?: QueryDocumentSnapshot<DocumentData, DocumentData>;
+      after?: string;
+      before?: string;
     },
     orderByQuery?: { value: string; order: 'asc' | 'desc' }
   ) {
@@ -46,15 +44,15 @@ export class EntityService {
 
     if (lim) {
       queryArgs.push(limit(lim));
+
+      if (cursor?.before) {
+        queryArgs.push(endBefore(await getDoc(doc(db, this.collection, cursor.before))));
+      } else {
+        if (cursor?.after) {
+          queryArgs.push(startAfter(await getDoc(doc(db, this.collection, cursor.after))));
+        }
+      }
       totalDoc = (await getCountFromServer(docRef)).data().count;
-    }
-    if (lim && cursor) {
-      if (cursor.after) {
-        queryArgs.push(startAfter(cursor.after));
-      }
-      if (cursor.before) {
-        queryArgs.push(endBefore(cursor.before));
-      }
     }
 
     const q = query(docRef, ...queryArgs);

@@ -1,8 +1,8 @@
 'use client';
+import { redirect } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
-import { redirect } from '@/navigation';
 import { ProjectService } from '@/services';
 
 import UpdateEntityPost from '../../../_components/UpdateEntityPost';
