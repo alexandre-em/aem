@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
-import LazyImage from '@/components/LazyImage';
+import CarouselDialog from '@/components/CarouselDialog';
 import MarkdownReader from '@/components/MarkdownReader';
 import { Badge } from '@/components/ui/badge';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Separator } from '@/components/ui/separator';
 import { ProjectService, formatDate } from '@/services';
 
@@ -79,27 +78,8 @@ export default async function ProjectId({ params: { id } }: IdParamsType) {
       </div>
 
       <Separator className="mt-1 mb-1" />
-      <h2 className="text-xl font-extrabold mb-2">Screenshot</h2>
-      <div className="flex justify-center">
-        {project.images.length > 0 && (
-          <Carousel className="w-[calc(100%-64px)] max-w-sm">
-            <CarouselContent className="-ml-1">
-              {project.images.map(
-                (img: ImageMin) =>
-                  img && (
-                    <CarouselItem key={img.url} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                      <div className="m-1 p-1 flex justify-center items-center h-full">
-                        <LazyImage src={img.url} className="object-contain w-52 max-h-48" />
-                      </div>
-                    </CarouselItem>
-                  )
-              )}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        )}
-      </div>
+      <h2 className="text-xl font-extrabold mb-2">Screenshots</h2>
+      <div className="flex justify-center">{project.images.length > 0 && <CarouselDialog images={project.images} />}</div>
 
       <Separator className="mt-2 mb-1" />
       <ShareButtonGroup title={project.title} />

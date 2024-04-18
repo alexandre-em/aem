@@ -9,7 +9,7 @@ export default function ButtonGroup({ github, demo }: { github?: string; demo?: 
     <div className="flex mt-2">
       {github && (
         <a href={github}>
-          <Button className="rounded-full w-[40px] p-2">
+          <Button className="rounded-full w-[40px] p-2 m-1">
             <Github />
           </Button>
         </a>
@@ -17,7 +17,7 @@ export default function ButtonGroup({ github, demo }: { github?: string; demo?: 
 
       {demo && (
         <a href={demo}>
-          <Button className="rounded-full w-[40px] p-2">
+          <Button className="rounded-full w-[40px] p-2 m-1">
             <ExternalLink />
           </Button>
         </a>

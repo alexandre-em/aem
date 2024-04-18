@@ -11,12 +11,15 @@ import {
 } from 'next-share';
 import React from 'react';
 
+import { usePathname } from '@/navigation';
+
 type ShareButtonGroupProps = {
   title: string;
 };
 
 export default function ShareButtonGroup({ title }: ShareButtonGroupProps) {
-  const url = window?.location?.href;
+  const path = usePathname();
+  const url = `https://alexandre-em.fr${path}`;
 
   return (
     <div className="w-full flex justify-end items-center">
