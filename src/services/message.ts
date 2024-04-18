@@ -1,11 +1,10 @@
 import {
-  DocumentData,
-  QueryDocumentSnapshot,
   collection as collectionRef,
   deleteDoc,
   doc,
   endBefore,
   getCountFromServer,
+  getDoc,
   getDocs,
   getFirestore,
   limit,
@@ -22,10 +21,7 @@ const MESSAGE_COLLECTION_NAME = 'messages';
 
 export async function getAll(
   lim?: number,
-  cursor?: {
-    after?: QueryDocumentSnapshot<DocumentData, DocumentData>;
-    before?: QueryDocumentSnapshot<DocumentData, DocumentData>;
-  },
+  cursor?: { after?: string; before?: string },
   orderByQuery?: { value: string; order: 'asc' | 'desc' }
 ) {
   const docRef = collectionRef(db, MESSAGE_COLLECTION_NAME);
@@ -37,15 +33,15 @@ export async function getAll(
 
   if (lim) {
     queryArgs.push(limit(lim));
+
+    if (cursor?.before) {
+      queryArgs.push(endBefore(await getDoc(doc(db, MESSAGE_COLLECTION_NAME, cursor.before))));
+    } else {
+      if (cursor?.after) {
+        queryArgs.push(startAfter(await getDoc(doc(db, MESSAGE_COLLECTION_NAME, cursor.after))));
+      }
+    }
     totalDoc = (await getCountFromServer(docRef)).data().count;
-  }
-  if (lim && cursor) {
-    if (cursor.after) {
-      queryArgs.push(startAfter(cursor.after));
-    }
-    if (cursor.before) {
-      queryArgs.push(endBefore(cursor.before));
-    }
   }
 
   const q = query(docRef, ...queryArgs);
@@ -60,6 +56,20 @@ export async function getAll(
   }
 
   return { result, error, totalDoc };
+}
+export async function getById(id: string) {
+  const docRef = doc(db, MESSAGE_COLLECTION_NAME, id);
+
+  let result = null;
+  let error = null;
+
+  try {
+    result = await getDoc(docRef);
+  } catch (e) {
+    error = e;
+  }
+
+  return { result, error };
 }
 
 export async function createOne(data: MessageType) {

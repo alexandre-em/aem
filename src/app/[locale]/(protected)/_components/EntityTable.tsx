@@ -10,33 +10,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { toast } from '@/components/ui/use-toast';
 import { Link } from '@/navigation';
-import { ProjectService, formatDate } from '@/services';
+import { formatDate } from '@/services';
 
-const services = {
-  projects: ProjectService,
-  gallery: ProjectService, // TODO: Replace by the gallery service
-  blog: ProjectService, // TODO: Replace by blog service
-};
-
-function DeleteDropdownItem({ id, type }: { id: string; type: EntityTypes }) {
-  return (
-    <DropdownMenuItem
-      variant="destructive"
-      onClick={() => {
-        services[type]
-          .deleteOne(id)
-          .then((res) => {
-            if (res.result) toast({ title: 'Successfully deleted', description: id });
-            else toast({ title: 'Failed to delete document...', description: id, variant: 'destructive' });
-          })
-          .catch(() => toast({ title: 'Failed to delete document...', description: id, variant: 'destructive' }));
-      }}>
-      Delete
-    </DropdownMenuItem>
-  );
-}
+import DeleteDropdownItem from './DeleteDropItem';
 
 export default function EntityTable({ type, entities }: { type: EntityTypes; entities: EntityType[] }) {
   return (

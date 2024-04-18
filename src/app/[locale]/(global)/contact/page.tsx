@@ -37,14 +37,10 @@ export default function Contact() {
         return;
       }
 
-      const { result, error } = await MessageService.createOne(formInputValues);
+      const { error } = await MessageService.createOne({ ...formInputValues, sentAt: new Date() });
 
       if (error) {
         toast({ title: 'An error occurred...', description: `${error}`, variant: 'destructive' });
-        return;
-      }
-      if (!result) {
-        toast({ title: 'An error occurred...', variant: 'destructive' });
         return;
       }
 

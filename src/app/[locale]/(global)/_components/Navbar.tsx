@@ -2,6 +2,7 @@
 import { Menu, PawPrint } from 'lucide-react';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 
+import DarkModeButton from '@/components/DarkModeButton';
 import { buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -15,8 +16,6 @@ import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { Link, usePathname, useRouter } from '@/navigation';
-
-import DarkModeButton from './DarkModeButton';
 
 const emojiLang = {
   en: '🇬🇧',

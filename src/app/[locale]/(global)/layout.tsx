@@ -3,10 +3,11 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 import '../../globals.css';
 
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/providers/theme.provider';
 import { cn } from '@/lib/utils';
+
+import Footer from './_components/Footer';
+import Navbar from './_components/Navbar';
 
 export async function generateMetadata({ params: { locale } }: LocaleParamsType) {
   const t = await getTranslations({ locale, namespace: 'Metadata' });

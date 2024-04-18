@@ -1,12 +1,11 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import LazyImage from '@/components/LazyImage';
+import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Link } from '@/navigation';
-
-import LazyImage from './LazyImage';
-import { buttonVariants } from './ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 
 export default function Footer({ params: { locale } }: LocaleParamsType) {
   const t = useTranslations('Footer');

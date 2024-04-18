@@ -48,6 +48,7 @@ type MessageType = {
   email: string;
   name: string;
   message: string;
+  sentAt: Date;
 };
 
 type EntityTypes = 'projects' | 'blog' | 'gallery';

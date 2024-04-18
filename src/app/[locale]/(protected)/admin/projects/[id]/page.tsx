@@ -15,7 +15,7 @@ export default function UpdateProjectPost({ params: { id } }: IdParamsType) {
   const handleSubmit = useCallback(
     (content: string) => {
       if (content) {
-        ProjectService.updateProject(id, {
+        ProjectService.updateOne(id, {
           content,
         }).then(() => {
           toast({ title: 'Project successfully updated!' });
