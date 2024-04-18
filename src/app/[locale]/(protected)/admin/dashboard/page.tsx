@@ -74,7 +74,9 @@ export default async function Dashboard({ searchParams: { limit = '10', after = 
             <MessageDropdownOptions message={msg} />
           </div>
           <div className="text-xs self-start mb-2">{formatDate(msg.sentAt)}</div>
-          <div className="line-clamp-2 text-xs text-muted-foreground self-start">{msg.message.substring(0, 300)}</div>
+          <div className="w-[calc(100vw-70px)] overflow-ellipsis line-clamp-2 text-xs text-muted-foreground self-start">
+            {msg.message.substring(0, 300)}
+          </div>
         </div>
       ))}
       <CursorPagination cursor={{ after: cursorAfter, before: cursorBefore }} limit={limit} />

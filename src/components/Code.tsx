@@ -10,8 +10,7 @@ export const CodeBlock = ({ ...props }) => {
     <SyntaxHighlighter
       language={props.className?.replace(/(?:lang(?:uage)?-)/, '')}
       style={oneDark}
-      wrapLongLines={true}
-      className="not-prose rounded-md overflow-auto">
+      className="not-prose rounded-md w-[calc(100dvw-45px)] sm:w-full overflow-auto">
       {props.children}
     </SyntaxHighlighter>
   );
