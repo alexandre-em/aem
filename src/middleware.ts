@@ -35,7 +35,7 @@ export const config = {
     '/',
     '/(fr|en|jp)?/blog/(.+)?',
     '/(fr|en|jp)?/projects/(.+)?',
-    '/(fr|en|jp)?/gallery',
+    '/(fr|en|jp)?/gallery/(.+)?',
     '/(fr|en|jp)?/not-found',
     '/(fr|en|jp)?/admin/(.+)?',
     '/(fr|en|jp)?/contact',

@@ -41,6 +41,7 @@ type PhotoType = {
   title: string;
   date: Date;
   createdAt: Date;
+  comments: CommentType[];
 };
 
 type MessageType = {

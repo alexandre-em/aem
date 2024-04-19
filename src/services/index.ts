@@ -1,9 +1,17 @@
+import { GalleryService as GService } from './gallery';
 import { ProjectService as PService } from './project';
 
 export * as ImageService from './image';
 export * as MessageService from './message';
 
 export const ProjectService = new PService();
+export const GalleryService = new GService();
+
+export const dynamicEntityService = {
+  projects: ProjectService,
+  gallery: GalleryService,
+  blog: ProjectService,
+};
 
 export const COLLECTIONS_NAME = {
   PROJECTS: 'projects',

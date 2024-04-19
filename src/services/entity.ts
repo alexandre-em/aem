@@ -20,7 +20,7 @@ import firebase_app from '@/lib/firebase';
 
 const db = getFirestore(firebase_app);
 
-export class EntityService {
+export class EntityService<T> {
   private collection: EntityTypes;
 
   constructor(collection: EntityTypes) {
@@ -101,13 +101,13 @@ export class EntityService {
     return { result, error };
   }
 
-  async createOne(data: EntityType) {
+  async createOne(data: T) {
     let result = null;
     let error = null;
     const id = crypto.randomUUID();
 
     try {
-      result = await setDoc(doc(db, this.collection, id), data, {
+      result = await setDoc(doc(db, this.collection, id), data as EntityType, {
         merge: true,
       });
     } catch (e) {
@@ -117,12 +117,12 @@ export class EntityService {
     return { id, result, error };
   }
 
-  async updateOne(id: string, data: Partial<EntityType>) {
+  async updateOne(id: string, data: Partial<T>) {
     let result = null;
     let error = null;
 
     try {
-      result = await updateDoc(doc(db, this.collection, id), data);
+      result = await updateDoc(doc(db, this.collection, id), data as Partial<EntityType>);
     } catch (e) {
       error = e;
     }
