@@ -1,63 +1,60 @@
 'use client';
-import Image from 'next/image';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { useRouter } from '@/navigation';
+import { ProjectService } from '@/services';
 
-import useHandler from './handlers';
+import ImageUploader from '../../../_components/ImageUploader';
 
 export default function CreateProject() {
-  const { images, handleSubmitImage, handleSubmit, handleSelectImage, handleChangeData } = useHandler();
+  const router = useRouter();
+  const [images, setImages] = useState<ImageMin[]>([]);
+  const [formData, setFormData] = useState<Partial<ProjectType>>();
+
+  const handleChangeData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    // Formatting to correct data type
+    const value =
+      e.target.id === 'dateStart' || e.target.id === 'dateEnd'
+        ? new Date(e.target.value)
+        : e.target.id === 'keywords'
+          ? e.target.value.split(',')
+          : e.target.value;
+
+    setFormData((prev) => ({ ...prev, [e.target.id]: value }));
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formDataWImages = { ...formData, images: images, createdAt: new Date() } as ProjectType;
+
+      ProjectService.createOne(formDataWImages).then(({ id, error }) => {
+        if (error) {
+          toast({ title: 'An error occurred...', description: 'There is an error while storing info', variant: 'destructive' });
+        } else {
+          toast({ title: 'Project successfully added !', description: id, variant: 'success' });
+          setFormData((prev) => ({ ...prev, id }));
+        }
+      });
+    },
+    [formData, images]
+  );
+
+  // Redirect when the project is created
+  useEffect(() => {
+    if (formData?.id) {
+      router.push(`/admin/projects/${formData.id}`);
+    }
+  }, [formData?.id, router]);
 
   return (
     <main className="flex flex-col flex-wrap p-5">
-      <h1 className="text-3xl font-black mb-5">Add a project</h1>
-      <Card className="mb-5">
-        <CardHeader>
-          <CardTitle>Upload pictures</CardTitle>
-          <CardDescription>you can select up to 5 pictures maximum</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-center">
-            {images.length > 0 && (
-              <Carousel className="w-[calc(100%-64px)] max-w-sm">
-                <CarouselContent className="-ml-1">
-                  {images.map(
-                    (img: File | null, i) =>
-                      img && (
-                        <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                          <div className="p-1 flex justify-center items-center h-full">
-                            <Image
-                              src={URL.createObjectURL(img)}
-                              alt="img"
-                              width="200"
-                              height="200"
-                              className="m-2 object-contain"
-                            />
-                          </div>
-                        </CarouselItem>
-                      )
-                  )}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
-            )}
-          </div>
-
-          <Label htmlFor="picture">Pictures</Label>
-          <Input id="picture" type="file" accept="image/*" multiple onChange={handleSelectImage} />
-        </CardContent>
-        <CardFooter>
-          <Button onClick={handleSubmitImage} disabled={images.length < 1}>
-            Upload picture{images.length > 0 ? 's' : ''}
-          </Button>
-        </CardFooter>
-      </Card>
+      <ImageUploader onUpload={(images: ImageMin[]) => setImages(images)} />
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader>

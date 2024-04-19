@@ -1,7 +1,7 @@
 'use client';
 import { UserCredential } from 'firebase/auth';
-import { redirect } from 'next/navigation';
-import React, { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useCallback, useEffect } from 'react';
 
 import { createSession } from '@/actions/auth';
 import useAuth from '@/components/hooks/useAuth';
@@ -12,6 +12,7 @@ import googleAuthInstance from '@/services/auth';
 
 export default function AdminPage() {
   const user = useAuth();
+  const router = useRouter();
 
   const handleSignIn = useCallback(async () => {
     try {
@@ -34,7 +35,9 @@ export default function AdminPage() {
     }
   }, []);
 
-  if (user) redirect('/admin/dashboard');
+  useEffect(() => {
+    if (user?.uid) router.push('/admin/dashboard');
+  }, [router, user]);
 
   return (
     <main className="min-h-[calc(100dvh-57px)] flex justify-center items-center">
