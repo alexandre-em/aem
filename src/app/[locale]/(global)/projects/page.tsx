@@ -36,7 +36,12 @@ export default async function projects({
   return (
     <main className="min-h-[calc(100dvh-57px)] xsm:min-h-[calc(100dvh-352px)] p-5">
       <div className="flex flex-wrap justify-between items-center">
-        <h1 className="text-3xl font-black mb-2">My work</h1>
+        <div className="mb-2">
+          <h1 className="text-3xl font-black mb-2">My work</h1>
+          <p className="text-muted-foreground text-xs">
+            Here you can find all my work related to the development: personal, scholar projects, etc.
+          </p>
+        </div>
         <LimitSelect />
       </div>
       <div className="flex flex-wrap">

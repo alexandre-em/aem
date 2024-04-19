@@ -28,8 +28,8 @@ export default function CarouselDialog({ images }: { images: ImageMin[] }) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <DialogContent className="w-[40dvw] max-w-[1000px] max-h-[80dvh]">
-        <LazyImage src={preview} className="w-full" />
+      <DialogContent className="min-w-full sm:min-w-[80%]">
+        <LazyImage src={preview} className="" />
       </DialogContent>
     </Dialog>
   );
