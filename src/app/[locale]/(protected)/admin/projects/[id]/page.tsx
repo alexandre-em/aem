@@ -1,14 +1,15 @@
 'use client';
-import { redirect } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from '@/navigation';
 import { ProjectService } from '@/services';
 
 import UpdateEntityPost from '../../../_components/UpdateEntityPost';
 
 export default function UpdateProjectPost({ params: { id } }: IdParamsType) {
   const { toast } = useToast();
+  const router = useRouter();
   const [project, setProject] = useState<ProjectType>();
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
@@ -40,9 +41,9 @@ export default function UpdateProjectPost({ params: { id } }: IdParamsType) {
 
   useEffect(() => {
     if (isUpdated) {
-      redirect('/admin/projects');
+      router.push('/admin/projects');
     }
-  }, [isUpdated]);
+  }, [isUpdated, router]);
 
   if (!project) return <h1>Loading...</h1>;
 

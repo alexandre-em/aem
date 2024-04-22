@@ -18,6 +18,7 @@ type ProjectType = {
 };
 
 type CommentType = {
+  id?: string;
   author: string;
   createdAt: Date;
   content: string;

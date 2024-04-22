@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 
 import LazyImage from '@/components/LazyImage';
+import MessagesBox from '@/components/MessagesBox';
 import { Separator } from '@/components/ui/separator';
 import { GalleryService, formatDate } from '@/services';
 
@@ -57,8 +58,20 @@ export default async function GalleryId({ params: { id } }: IdParamsType) {
       <div className="flex flex-col items-center">
         <LazyImage src={photo.image.url} className="max-w-[1000px] w-full sm:w-[90%] mb-1" />
         <ShareButtonGroup title={photo.title} />
-        <h2 className="text-xl font-black mb-2 self-start">Comments ({photo.comments.length}): </h2>
-        <CommentReply id={id} type="gallery" />
+        <div className="flex flex-wrap w-full justify-between items-center my-2">
+          <h2 className="text-xl font-black">Comments ({photo.comments.length}): </h2>
+          <CommentReply id={id} type="gallery" />
+        </div>
+        {photo.comments.map((comment: CommentType, i: number) => (
+          <div key={`${comment.author}-${i}`}>
+            <MessagesBox
+              content={comment.content}
+              name={comment.author}
+              sentAt={new Date((comment.createdAt as unknown as FirebaseDateType).seconds * 1000)}
+              comments={comment.comments}
+            />
+          </div>
+        ))}
       </div>
     </main>
   );

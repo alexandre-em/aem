@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
 import LimitSelect from '@/components/LimitSelect';
 import { buttonVariants } from '@/components/ui/button';
+import { Link } from '@/navigation';
 import { ProjectService } from '@/services';
 
 import EntityTable from '../../_components/EntityTable';

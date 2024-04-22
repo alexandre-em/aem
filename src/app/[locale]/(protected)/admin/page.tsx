@@ -1,6 +1,5 @@
 'use client';
 import { UserCredential } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect } from 'react';
 
 import { createSession } from '@/actions/auth';
@@ -8,6 +7,7 @@ import useAuth from '@/components/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
+import { useRouter } from '@/navigation';
 import googleAuthInstance from '@/services/auth';
 
 export default function AdminPage() {
@@ -37,7 +37,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (user?.uid) router.push('/admin/dashboard');
-  }, [router, user]);
+  }, [router, user?.uid]);
 
   return (
     <main className="min-h-[calc(100dvh-57px)] flex justify-center items-center">

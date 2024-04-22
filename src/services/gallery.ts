@@ -8,6 +8,8 @@ export class GalleryService extends EntityService<PhotoType> {
   }
 
   addComment(id: string, comment: CommentType) {
-    super.updateOne(id, { comments: arrayUnion(comment) as unknown as CommentType[] });
+    const commentId = crypto.randomUUID();
+
+    return super.updateOne(id, { comments: arrayUnion({ ...comment, id: commentId }) as unknown as CommentType[] });
   }
 }

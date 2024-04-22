@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
@@ -7,6 +6,7 @@ import MessagesBox from '@/components/MessagesBox';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Link } from '@/navigation';
 import { MessageService } from '@/services';
 
 export default async function Dashboard({ searchParams: { limit = '10', after = undefined, before = undefined } }: IdParamsType) {

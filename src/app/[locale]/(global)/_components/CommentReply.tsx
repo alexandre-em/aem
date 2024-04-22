@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/components/ui/use-toast';
 import { GalleryService, dynamicEntityService } from '@/services';
 
 export default function CommentReply({ id, type }: { id: string; type: 'gallery' | 'blog' }) {
@@ -20,11 +21,26 @@ export default function CommentReply({ id, type }: { id: string; type: 'gallery'
     setComment((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    if (comment) {
-      (dynamicEntityService[type] as typeof GalleryService).addComment(id, { ...comment, createdAt: new Date() });
-    }
-  }, [comment, id, type]);
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (comment) {
+        (dynamicEntityService[type] as typeof GalleryService)
+          .addComment(id, {
+            ...comment,
+            createdAt: new Date(),
+          })
+          .then(() => {
+            toast({ title: 'Success', variant: 'success' });
+          })
+          .catch(() => {
+            toast({ title: 'Failed...', description: 'Please try again later', variant: 'destructive' });
+          });
+      }
+    },
+    [comment, id, type]
+  );
 
   return (
     <Dialog>
@@ -34,23 +50,30 @@ export default function CommentReply({ id, type }: { id: string; type: 'gallery'
           Comment
         </Button>
       </DialogTrigger>
-      <form onSubmit={handleSubmit} className="w-full">
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Write a comment</DialogTitle>
-          </DialogHeader>
-          <div>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Write a comment</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="mb-4">
             <Label htmlFor="author">Name *</Label>
             <Input type="text" id="author" onChange={handleChange} placeholder="Name" autoFocus required />
           </div>
-          <Textarea id="content" placeholder="Type your comment here..." required onChange={handleChange} rows={2} />
+          <Textarea
+            id="content"
+            className="mb-4"
+            placeholder="Type your comment here..."
+            required
+            onChange={handleChange}
+            rows={2}
+          />
           <DialogFooter>
             <Button className="mt-2" type="submit">
               Send
             </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
