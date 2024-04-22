@@ -57,7 +57,7 @@ export default function LocaleLayout({ children, params: { locale } }: React.Pro
       <body className={cn('min-h-screen bg-primary-foreground font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar locale={locale} />
-          {children}
+          <div className="pt-[57px]">{children}</div>
           <Footer params={{ locale }} />
         </ThemeProvider>
       </body>

@@ -96,7 +96,7 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
   const [open, setOpen] = useState<boolean | undefined>(false);
 
   return (
-    <>
+    <div className="fixed w-full">
       <NavigationMenu className="p-2 min-w-full h-[56px] bg-background justify-between">
         {/*Left*/}
         <div className="flex items-center">
@@ -122,7 +122,7 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
               <Separator />
             </SheetHeader>
             <NavbarMenu locale={locale} className="flex flex-col w-full" onClick={() => setOpen(false)} />
-            <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
+            <SheetFooter className="flex flex-row justify-between mt-[calc(100dvh-329px)]">
               <Link
                 href="/admin"
                 locale="en"
@@ -138,6 +138,6 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
         </Sheet>
       </NavigationMenu>
       <Separator />
-    </>
+    </div>
   );
 }

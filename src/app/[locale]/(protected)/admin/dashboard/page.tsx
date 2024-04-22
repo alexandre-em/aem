@@ -3,13 +3,11 @@ import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
 import LimitSelect from '@/components/LimitSelect';
+import MessagesBox from '@/components/MessagesBox';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { MessageService, formatDate } from '@/services';
-
-import MessageDropdownOptions from './_components/MessageDropdownOptions';
+import { MessageService } from '@/services';
 
 export default async function Dashboard({ searchParams: { limit = '10', after = undefined, before = undefined } }: IdParamsType) {
   const { result, error, totalDoc } = await MessageService.getAll(
@@ -66,18 +64,7 @@ export default async function Dashboard({ searchParams: { limit = '10', after = 
       </div>
       {!messages.length && <div className="flex flex-wrap w-full justify-center p-10">No more items...</div>}
       {messages.map((msg) => (
-        <div
-          key={msg.id}
-          className={cn(buttonVariants({ size: 'lg', variant: 'secondary' }), 'my-1 border flex flex-wrap flex-col h-fit p-3')}>
-          <div className="w-full flex flex-wrap justify-between">
-            <h2 className="capitalize font-bold">{msg.name}</h2>
-            <MessageDropdownOptions message={msg} />
-          </div>
-          <div className="text-xs self-start mb-2">{formatDate(msg.sentAt)}</div>
-          <div className="w-[calc(100vw-70px)] overflow-ellipsis line-clamp-2 text-xs text-muted-foreground self-start">
-            {msg.message.substring(0, 300)}
-          </div>
-        </div>
+        <MessagesBox key={msg.id} content={msg.message} name={msg.name} sentAt={msg.sentAt} />
       ))}
       <CursorPagination cursor={{ after: cursorAfter, before: cursorBefore }} limit={limit} />
     </main>

@@ -23,3 +23,9 @@ type MarkdownEditorProps = {
 type MarkdownReaderProps = {
   content: string;
 } & Partial<WithClassNameComponentType>;
+
+type MessageBoxProps = {
+  content: string;
+  name: string;
+  sentAt: Date;
+};
