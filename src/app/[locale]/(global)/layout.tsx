@@ -1,4 +1,5 @@
 import { Inter as FontSans } from 'next/font/google';
+import { useTranslations } from 'next-intl';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 import '../../globals.css';
@@ -52,12 +53,20 @@ export function generateStaticParams() {
 
 export default function LocaleLayout({ children, params: { locale } }: React.PropsWithChildren<LocaleParamsType>) {
   unstable_setRequestLocale(locale);
+  const t = useTranslations('Navbar');
+
+  const messages = {
+    projects: t('projects'),
+    gallery: t('gallery'),
+    blog: t('blog'),
+    contact: t('contact'),
+  };
 
   return (
     <html lang={locale}>
       <body className={cn('min-h-screen bg-primary-foreground font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Navbar locale={locale} />
+          <Navbar locale={locale} messages={messages} />
           <div className="pt-[57px]">{children}</div>
           <Toaster />
           <Footer params={{ locale }} />

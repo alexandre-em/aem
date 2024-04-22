@@ -53,6 +53,7 @@ function LanguageSwitch({ locale, className }: NavbarComponentsProps & WithClass
 
 function NavbarMenu({
   locale,
+  messages,
   className,
   onClick,
 }: NavbarComponentsProps & WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLAnchorElement> }) {
@@ -61,21 +62,21 @@ function NavbarMenu({
       <NavigationMenuItem className="m-1 w-full">
         <Link className="sm:w-full" href={`/projects`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            Works
+            {messages?.projects || 'Works'}
           </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full">
         <Link href={`/gallery`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            Gallery
+            {messages?.gallery || 'Gallery'}
           </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full">
         <Link href={`/blog`} locale={locale} legacyBehavior passHref>
           <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            Blog
+            {messages?.blog || 'Blog'}
           </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
@@ -85,14 +86,14 @@ function NavbarMenu({
           href={`/contact`}
           locale={locale}
           className={cn(buttonVariants(), 'sm:rounded-3xl rounded-md m-1 w-full')}>
-          Contact
+          {messages?.contact || 'Contact'}
         </Link>
       </NavigationMenuItem>
     </NavigationMenuList>
   );
 }
 
-export default function Navbar({ locale }: NavbarComponentsProps) {
+export default function Navbar({ messages, locale }: NavbarComponentsProps) {
   const [open, setOpen] = useState<boolean | undefined>(false);
 
   return (
@@ -109,7 +110,7 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
         </div>
 
         {/*Right Laptop*/}
-        <NavbarMenu locale={locale} className="hidden sm:flex" />
+        <NavbarMenu locale={locale} messages={messages} className="hidden sm:flex" />
 
         {/*Right Smartphone*/}
         <Sheet open={open} onOpenChange={(value) => setOpen(value)}>
@@ -121,7 +122,7 @@ export default function Navbar({ locale }: NavbarComponentsProps) {
               <SheetTitle>Alexandre Em</SheetTitle>
               <Separator />
             </SheetHeader>
-            <NavbarMenu locale={locale} className="flex flex-col w-full" onClick={() => setOpen(false)} />
+            <NavbarMenu locale={locale} messages={messages} className="flex flex-col w-full" onClick={() => setOpen(false)} />
             <SheetFooter className="flex flex-row justify-between mt-[calc(100dvh-329px)]">
               <Link
                 href="/admin"

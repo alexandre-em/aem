@@ -13,6 +13,7 @@ type LinkedCardItemProps = {
 
 type NavbarComponentsProps = {
   locale: 'en' | 'fr' | 'jp';
+  messages?: Record<string, string>;
 };
 
 type MarkdownEditorProps = {

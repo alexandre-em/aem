@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
@@ -8,10 +9,11 @@ import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/
 import { Link } from '@/navigation';
 import { ProjectService, formatDate } from '@/services';
 
-export default async function projects({
+export default async function Projects({
   params: { locale },
   searchParams: { limit = '10', after = undefined, before = undefined },
 }: LocaleParamsType & IdParamsType) {
+  const t = await getTranslations('Projects');
   const { result, totalDoc } = await ProjectService.getAll(
     parseInt(limit as string),
     { after, before },
@@ -37,10 +39,8 @@ export default async function projects({
     <main className="min-h-[calc(100dvh-57px)] xsm:min-h-[calc(100dvh-352px)] p-5">
       <div className="flex flex-wrap justify-between items-center">
         <div className="mb-2">
-          <h1 className="text-3xl font-black mb-2">My work</h1>
-          <p className="text-muted-foreground text-xs">
-            Here you can find all my work related to the development: personal, scholar projects, etc.
-          </p>
+          <h1 className="text-3xl font-black mb-2">{t('title')}</h1>
+          <p className="text-muted-foreground text-xs">{t('description')} </p>
         </div>
         <LimitSelect />
       </div>

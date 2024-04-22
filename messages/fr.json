@@ -24,8 +24,40 @@
 
     "skills": "Compétence"
   },
+  "Projects": {
+    "title": "Projet",
+    "description": " Ici vous trouverez tous mes projets personnels, scolaires liés au développement web"
+  },
+  "Gallery": {
+    "title": "Gallerie",
+    "description": "Mis à part le code, j'ai d'autres passions comme apprendre la photographie de paysage, la guitare, la cuisine mais aussi sortir faire quelques petites randonnées.\n Vous trouverez donc ici quelques photos que j'ai pris"
+  },
+  "Blog": {
+    "title": "Blog",
+    "description": "Cette page est en construction"
+  },
+  "Contact": {
+    "title": "Contact",
+    "description": "Merci de votre visite. Si vous voulez m'écrire un message ou un commentaire à propos de mon site portfolio, n'hésitez pas à utiliser ce formulaire.",
+    "name": "Nom",
+    "email": "Adresse mail",
+    "message": "Ecrire un message",
+    "submit": "Envoyer"
+  },
+  "Components": {
+    "current": "En cours",
+    "limit": "Limite",
+    "previous": "précédent",
+    "next": "suivant"
+  },
   "NotFound": {
     "title": "La page que vous tentez d'accéder n'existe pas."
+  },
+  "Navbar": {
+    "projects": "Projet",
+    "gallery": "Gallerie",
+    "blog": "Blog",
+    "contact": "Contact"
   },
   "Footer": {
     "name": "Alexandre Em",

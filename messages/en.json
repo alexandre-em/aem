@@ -24,8 +24,40 @@
 
     "skills": "Skill"
   },
+  "Projects": {
+    "title": "My work",
+    "description": "Here you can find all my work related to coding: personal, scholar projects, etc."
+  },
+  "Gallery": {
+    "title": "Gallery",
+    "description": "I have many other passions beside coding, like learning landscape photography, guitar, cooking, doing some hiking.\n Here you can find some highlight of photos I've taken."
+  },
+  "Blog": {
+    "title": "Blog",
+    "description": "This page will be updated soon.\n Please come back later"
+  },
+  "Contact": {
+    "title": "Contact",
+    "description": "Thank you for visiting my portfolio website.\n If you have any messages or comments about my website, do not hesitate to use the form below.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Type your message here",
+    "submit": "Submit"
+  },
+  "Components": {
+    "current": "Current",
+    "limit": "Limit",
+    "previous": "previous",
+    "next": "next"
+  },
   "NotFound": {
     "title": "The page you are looking for cannot be found."
+  },
+  "Navbar": {
+    "projects": "Works",
+    "gallery": "Gallery",
+    "blog": "Blog",
+    "contact": "Contact"
   },
   "Footer": {
     "name": "Alexandre Em",

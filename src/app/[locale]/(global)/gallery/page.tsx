@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
@@ -7,10 +8,8 @@ import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/
 import { Link } from '@/navigation';
 import { GalleryService, formatDate } from '@/services';
 
-export default async function Gallery({
-  // params: { locale },
-  searchParams: { limit = '10', after = undefined, before = undefined },
-}: LocaleParamsType & IdParamsType) {
+export default async function Gallery({ searchParams: { limit = '10', after = undefined, before = undefined } }: IdParamsType) {
+  const t = await getTranslations('Gallery');
   const { result, totalDoc } = await GalleryService.getAll(
     parseInt(limit as string),
     { after, before },
@@ -35,11 +34,8 @@ export default async function Gallery({
     <main className="min-h-[calc(100dvh-57px)] xsm:min-h-[calc(100dvh-352px)] p-5">
       <div className="flex flex-wrap justify-between items-center">
         <div className="mb-2">
-          <h1 className="text-3xl font-black mb-2">Gallery</h1>
-          <p className="text-muted-foreground text-xs">
-            I have many other passions beside coding, like learning landscape photography, guitar, cooking, doing some hiking.
-            <br /> Here you can find some highlight of photos I&apos;ve taken.
-          </p>
+          <h1 className="text-3xl font-black mb-2">{t('title')}</h1>
+          <p className="text-muted-foreground text-xs">{t('description')}</p>
         </div>
         <LimitSelect />
       </div>
