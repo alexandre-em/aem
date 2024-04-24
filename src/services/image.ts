@@ -1,7 +1,9 @@
-import { ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, ref, uploadBytes } from 'firebase/storage';
 import Resizer from 'react-image-file-resizer';
 
 import { storage } from '@/lib/firebase';
+
+const prefix = 'https://storage.googleapis.com/alexandre-em.appspot.com/';
 
 export const generateMiniature = (img: Blob) => {
   return new Promise((resolve) => {
@@ -65,4 +67,21 @@ export const uploadImageWithMiniature = async (img: File, id: number): Promise<I
   const fullfilledMin = promises[1] as PromiseFulfilledResult<string>;
 
   return { url: fullfilledUrl.value, miniature: fullfilledMin.value, id };
+};
+
+export const deleteImageWithMiniature = async (url: string) => {
+  const filepath = url.split(prefix)[1];
+  const imageRef = ref(storage, filepath);
+
+  let result;
+  let error;
+
+  try {
+    await deleteObject(imageRef);
+    result = true;
+  } catch (e) {
+    error = 'An error occurred while deleting ' + url;
+  }
+
+  return { result, error };
 };

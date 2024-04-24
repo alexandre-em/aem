@@ -39,10 +39,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
             Passionate creating great experiences for Digital Product
           </p>
           <div className="flex flex-wrap justify-evenly m-2 w-full sm:justify-start">
-            <a
-              href="https://drive.google.com/file/d/1yiToT9R1EXYW18tS5wx3KMM2ZFhmPu86/view?pli=1"
-              target="_blank"
-              className={cn(buttonVariants({ variant: 'outline' }), 'mr-5 mt-2 mb-2')}>
+            <a href={t('link')} target="_blank" className={cn(buttonVariants({ variant: 'outline' }), 'mr-5 mt-2 mb-2')}>
               {t('resume')}
             </a>
             <Link href="/projects" className={cn(buttonVariants({}), 'm-2')}>
