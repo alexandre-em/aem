@@ -17,6 +17,7 @@ const options = {
   h3: Typ.TitleH3,
   h4: Typ.TitleH4,
   a: Typ.Link,
+  blockquote: Typ.Paragraph,
   strong: Typ.Bold,
 };
 
@@ -27,7 +28,7 @@ export default function MarkdownReader({ content, className }: MarkdownReaderPro
         className="prose prose-invert text-primary"
         components={options}
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSanitize, [rehypeExternalLinks, { content: { type: 'text', value: '🔗' } }]]}>
+        rehypePlugins={[rehypeSanitize, [rehypeExternalLinks, { content: { type: 'text', value: ' 🔗' } }]]}>
         {content}
       </Markdown>
     </article>

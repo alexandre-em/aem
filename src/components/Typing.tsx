@@ -25,6 +25,12 @@ export const Bold = ({ ...props }) => (
   </b>
 );
 
+export const Paragraph = ({ ...props }) => (
+  <blockquote className="border-s-[0.25rem] font-thin italic text-muted-foreground text-md" {...props}>
+    {props.children}
+  </blockquote>
+);
+
 export const Link = ({ ...props }) => (
   <a className="text-muted-foreground" {...props}>
     {props.children}

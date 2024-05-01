@@ -54,6 +54,7 @@ export default function CreateProject() {
 
   return (
     <main className="flex flex-col flex-wrap p-5">
+      <h1 className="text-3xl font-black mb-5">Add a project</h1>
       <ImageUploader onUpload={(images: ImageMin[]) => setImages(images)} />
       <form onSubmit={handleSubmit}>
         <Card>

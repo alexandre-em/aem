@@ -58,50 +58,47 @@ export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin
   }, [images, imagesWithMin, onUpload]);
 
   return (
-    <div>
-      <h1 className="text-3xl font-black mb-5">Add a project</h1>
-      <Card className="mb-5">
-        <CardHeader>
-          <CardTitle>Upload pictures</CardTitle>
-          <CardDescription>you can select up to 5 pictures maximum</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-center">
-            {images.length > 0 && (
-              <Carousel className="w-[calc(100%-64px)] max-w-sm">
-                <CarouselContent className="-ml-1">
-                  {images.map(
-                    (img: File | null, i) =>
-                      img && (
-                        <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                          <div className="p-1 flex justify-center items-center h-full">
-                            <Image
-                              src={URL.createObjectURL(img)}
-                              alt="img"
-                              width="200"
-                              height="200"
-                              className="m-2 object-contain"
-                            />
-                          </div>
-                        </CarouselItem>
-                      )
-                  )}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
-            )}
-          </div>
+    <Card className="h-fit mb-5">
+      <CardHeader>
+        <CardTitle>Upload pictures</CardTitle>
+        <CardDescription>you can select up to 5 pictures maximum</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-center">
+          {images.length > 0 && (
+            <Carousel className="w-[calc(100%-64px)] h-[300px] max-w-sm">
+              <CarouselContent className="-ml-1">
+                {images.map(
+                  (img: File | null, i) =>
+                    img && (
+                      <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                        <div className="p-1 flex justify-center items-center h-full">
+                          <Image
+                            src={URL.createObjectURL(img)}
+                            alt="img"
+                            width="200"
+                            height="200"
+                            className="m-2 object-contain"
+                          />
+                        </div>
+                      </CarouselItem>
+                    )
+                )}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          )}
+        </div>
 
-          <Label htmlFor="picture">Pictures</Label>
-          <Input id="picture" type="file" accept="image/*" multiple onChange={handleSelectImage} />
-        </CardContent>
-        <CardFooter>
-          <Button onClick={handleSubmitImage} disabled={images.length < 1}>
-            Upload picture{images.length > 0 ? 's' : ''}
-          </Button>
-        </CardFooter>
-      </Card>
-    </div>
+        <Label htmlFor="picture">Pictures</Label>
+        <Input id="picture" type="file" accept="image/*" multiple onChange={handleSelectImage} />
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleSubmitImage} disabled={images.length < 1}>
+          Upload picture{images.length > 0 ? 's' : ''}
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

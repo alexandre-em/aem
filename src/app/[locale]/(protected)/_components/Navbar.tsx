@@ -6,7 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { removeSession } from '@/actions/auth';
 import DarkModeButton from '@/components/DarkModeButton';
 import useAuth from '@/components/hooks/useAuth';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,31 +16,34 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { Link } from '@/navigation';
 import googleAuthInstance from '@/services/auth';
 
+async function signOut(callback?: () => void) {
+  try {
+    await googleAuthInstance.signOut();
+    if (callback) {
+      callback();
+    }
+
+    toast({
+      description: 'See you soon !',
+      title: 'You have been successfully logged out ',
+    });
+    await removeSession();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onClick?: () => void }) {
   const user: User | null = useAuth();
-  const { toast } = useToast();
 
   const handleSignOut = useCallback(async () => {
-    try {
-      await googleAuthInstance.signOut();
-      if (onClick) {
-        onClick();
-      }
-
-      toast({
-        description: 'See you soon !',
-        title: 'You have been successfully logged out ',
-      });
-      await removeSession();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [onClick, toast]);
+    await signOut(onClick);
+  }, [onClick]);
 
   if (!user?.uid) return null;
 
@@ -74,9 +77,9 @@ function NavbarMenu({ className, onClick }: WithClassNameComponentType & { onCli
           </NavigationMenuLink>
         </Link>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full" onClick={handleSignOut}>
-        <Button className="sm:rounded-3xl rounded-md m-1 w-full">
-          <Link href={`/`}>Logout</Link>
+      <NavigationMenuItem className="m-1 w-full">
+        <Button className="sm:rounded-3xl rounded-md m-1 w-full" onClick={handleSignOut}>
+          Logout
         </Button>
       </NavigationMenuItem>
     </NavigationMenuList>
@@ -115,9 +118,9 @@ export default function Navbar() {
               </SheetHeader>
               <NavbarMenu className="flex flex-col w-full" onClick={() => setOpen(false)} />
               <SheetFooter className="flex flex-row justify-between mt-[calc(100vh-329px)]">
-                <Link href="/" locale="en" className={cn(buttonVariants({ variant: 'ghost' }), 'text-primary-foreground')}>
+                <Button variant="ghost" onClick={() => signOut()}>
                   Logout
-                </Link>
+                </Button>
                 <div className="flex">
                   <DarkModeButton className="mr-3" />
                 </div>

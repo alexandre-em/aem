@@ -9,6 +9,7 @@ export async function createSession(uid: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24, // One day
+    expires: 60 * 60 * 24,
     path: '/',
   });
 
