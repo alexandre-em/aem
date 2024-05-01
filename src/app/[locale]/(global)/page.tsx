@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
@@ -6,9 +7,12 @@ import LinkedCardItem from '@/components/LinkedCardItem';
 import LinksGroup from '@/components/LinksGroup';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { HIGHLIGHT_PROJECT } from '@/constants';
 import { cn } from '@/lib/utils';
 import { Link } from '@/navigation';
+import { formatDate } from '@/services';
 
 import ThemedStats from './_components/ThemedStats';
 
@@ -46,6 +50,31 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
               {t('projects')}
             </Link>
           </div>
+        </div>
+
+        <h2 className="text-lg font-bold">{t('highlight')}</h2>
+        <div className="p-1 flex flex-wrap justify-center sm:justify-start">
+          {HIGHLIGHT_PROJECT.map((proj) => (
+            <Card key={proj.id} className="m-2 w-fit">
+              <Link href={`/projects/${proj.id}`} locale={locale}>
+                <CardContent className="p-2">
+                  <Image
+                    src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
+                    width={250}
+                    height={141}
+                    className="max-w-[250px] h-[141px] object-cover"
+                    alt=""
+                  />
+                </CardContent>
+                <CardFooter className="flex flex-col items-start max-w-[250px]">
+                  <h2 className="text-xl font-bold">{proj.title}</h2>
+                  <CardDescription className="text-xs">
+                    {formatDate(proj.dateStart)} - {proj.dateEnd ? formatDate(proj.dateEnd) : 'now'}
+                  </CardDescription>
+                </CardFooter>
+              </Link>
+            </Card>
+          ))}
         </div>
 
         {/* Keywords: tech skills */}
