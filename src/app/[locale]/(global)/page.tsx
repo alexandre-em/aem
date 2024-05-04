@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
@@ -52,31 +51,6 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           </div>
         </div>
 
-        <h2 className="text-lg font-bold">{t('highlight')}</h2>
-        <div className="p-1 flex flex-wrap justify-center sm:justify-start">
-          {HIGHLIGHT_PROJECT.map((proj) => (
-            <Card key={proj.id} className="m-2 w-fit">
-              <Link href={`/projects/${proj.id}`} locale={locale}>
-                <CardContent className="p-2">
-                  <Image
-                    src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
-                    width={250}
-                    height={141}
-                    className="max-w-[250px] h-[141px] object-cover"
-                    alt=""
-                  />
-                </CardContent>
-                <CardFooter className="flex flex-col items-start max-w-[250px]">
-                  <h2 className="text-xl font-bold">{proj.title}</h2>
-                  <CardDescription className="text-xs">
-                    {formatDate(proj.dateStart)} - {proj.dateEnd ? formatDate(proj.dateEnd) : 'now'}
-                  </CardDescription>
-                </CardFooter>
-              </Link>
-            </Card>
-          ))}
-        </div>
-
         {/* Keywords: tech skills */}
         <div className="flex flex-wrap justify-center mt-3">
           {techs.map((tech) => (
@@ -118,6 +92,29 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           url="https://cfa-insta.fr/analyste-developpeur/"
           src="/images/insta.jpg"
         />
+
+        {/* Projects */}
+        <h2 className="text-lg font-bold">{t('highlight')}</h2>
+        <div className="p-1 flex flex-wrap justify-center sm:justify-start">
+          {HIGHLIGHT_PROJECT.map((proj) => (
+            <Card key={proj.id} className="m-2 w-fit">
+              <Link href={`/projects/${proj.id}`} locale={locale}>
+                <CardContent className="p-2">
+                  <LazyImage
+                    src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
+                    className="max-w-[250px] h-[141px] object-cover"
+                  />
+                </CardContent>
+                <CardFooter className="flex flex-col items-start max-w-[250px]">
+                  <h2 className="text-xl font-bold">{proj.title}</h2>
+                  <CardDescription className="text-xs">
+                    {formatDate(proj.dateStart)} - {proj.dateEnd ? formatDate(proj.dateEnd) : 'now'}
+                  </CardDescription>
+                </CardFooter>
+              </Link>
+            </Card>
+          ))}
+        </div>
 
         {/* Github/Leetcode stats */}
         <Separator className="mt-3 mb-2" />

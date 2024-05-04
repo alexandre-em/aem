@@ -79,6 +79,7 @@ export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin
                             width="200"
                             height="200"
                             className="m-2 object-contain"
+                            loading="lazy"
                           />
                         </div>
                       </CarouselItem>

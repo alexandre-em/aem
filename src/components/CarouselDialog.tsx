@@ -31,7 +31,14 @@ export default function CarouselDialog({ images }: { images: ImageMin[] }) {
                   <CarouselItem
                     onClick={() => setPreview(img)}
                     className="p-2 md:basis-1/2 lg:basis-1/3 flex justify-center items-center">
-                    <Image src={img.url} className="object-contain w-52 max-h-48" alt="img" width="250" height="100" />
+                    <Image
+                      src={img.url}
+                      className="object-contain w-52 max-h-48"
+                      alt="img"
+                      width="250"
+                      height="100"
+                      loading="lazy"
+                    />
                   </CarouselItem>
                 </DialogTrigger>
               )

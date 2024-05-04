@@ -20,7 +20,7 @@ export const metadata = {
 
 export default function AdminLayout({ children }: React.PropsWithChildren<unknown>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn('min-h-dvh bg-primary-foreground font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />

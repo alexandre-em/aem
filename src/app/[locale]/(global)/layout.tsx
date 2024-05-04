@@ -63,7 +63,7 @@ export default function LocaleLayout({ children, params: { locale } }: React.Pro
   };
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={cn('min-h-screen bg-primary-foreground font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar locale={locale} messages={messages} />

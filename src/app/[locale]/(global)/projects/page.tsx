@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import CursorPagination from '@/components/CursorPagination';
+import LazyImage from '@/components/LazyImage';
 import LimitSelect from '@/components/LimitSelect';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
@@ -49,12 +49,9 @@ export default async function Projects({
           <Card key={proj.id} className="m-2">
             <Link href={`/projects/${proj.id}`} locale={locale}>
               <CardContent className="p-2">
-                <Image
+                <LazyImage
                   src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
-                  width={250}
-                  height={141}
                   className="w-[250px] h-[141px] object-cover"
-                  alt=""
                 />
               </CardContent>
               <CardFooter className="flex flex-col items-start max-w-[250px]">

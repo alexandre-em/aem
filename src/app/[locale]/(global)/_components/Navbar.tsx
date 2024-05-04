@@ -1,9 +1,9 @@
 'use client';
 import { Menu, PawPrint } from 'lucide-react';
-import React, { MouseEventHandler, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import DarkModeButton from '@/components/DarkModeButton';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -52,42 +52,43 @@ function LanguageSwitch({ locale, className }: NavbarComponentsProps & WithClass
 }
 
 function NavbarMenu({
-  locale,
   messages,
   className,
   onClick,
-}: NavbarComponentsProps & WithClassNameComponentType & { onClick?: MouseEventHandler<HTMLAnchorElement> }) {
+}: NavbarComponentsProps & WithClassNameComponentType & { onClick?: () => void }) {
+  const router = useRouter();
+
+  const handleRedirect = useCallback(
+    (path: string) => {
+      if (onClick) {
+        onClick();
+      }
+      router.push(path);
+    },
+    [onClick, router]
+  );
+
   return (
     <NavigationMenuList className={className}>
       <NavigationMenuItem className="m-1 w-full">
-        <Link className="sm:w-full" href={`/projects`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            {messages?.projects || 'Works'}
-          </NavigationMenuLink>
-        </Link>
+        <NavigationMenuLink onClick={() => handleRedirect('/projects')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+          {messages?.projects || 'Works'}
+        </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full">
-        <Link href={`/gallery`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            {messages?.gallery || 'Gallery'}
-          </NavigationMenuLink>
-        </Link>
+        <NavigationMenuLink onClick={() => handleRedirect('/gallery')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+          {messages?.gallery || 'Gallery'}
+        </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full">
-        <Link href={`/blog`} locale={locale} legacyBehavior passHref>
-          <NavigationMenuLink onClick={onClick} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-            {messages?.blog || 'Blog'}
-          </NavigationMenuLink>
-        </Link>
+        <NavigationMenuLink onClick={() => handleRedirect('/blog')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
+          {messages?.blog || 'Blog'}
+        </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem className="m-1 w-full">
-        <Link
-          onClick={onClick}
-          href={`/contact`}
-          locale={locale}
-          className={cn(buttonVariants(), 'sm:rounded-3xl rounded-md m-1 w-full')}>
+        <Button onClick={() => handleRedirect('/contact')} className="sm:rounded-3xl rounded-md m-1 w-full">
           {messages?.contact || 'Contact'}
-        </Link>
+        </Button>
       </NavigationMenuItem>
     </NavigationMenuList>
   );
