@@ -70,17 +70,17 @@ function NavbarMenu({
 
   return (
     <NavigationMenuList className={className}>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full cursor-pointer">
         <NavigationMenuLink onClick={() => handleRedirect('/projects')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
           {messages?.projects || 'Works'}
         </NavigationMenuLink>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full cursor-pointer">
         <NavigationMenuLink onClick={() => handleRedirect('/gallery')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
           {messages?.gallery || 'Gallery'}
         </NavigationMenuLink>
       </NavigationMenuItem>
-      <NavigationMenuItem className="m-1 w-full">
+      <NavigationMenuItem className="m-1 w-full cursor-pointer">
         <NavigationMenuLink onClick={() => handleRedirect('/blog')} className={cn(navigationMenuTriggerStyle(), 'w-full')}>
           {messages?.blog || 'Blog'}
         </NavigationMenuLink>
@@ -98,7 +98,7 @@ export default function Navbar({ messages, locale }: NavbarComponentsProps) {
   const [open, setOpen] = useState<boolean | undefined>(false);
 
   return (
-    <div className="fixed w-full">
+    <div className="fixed w-full z-50">
       <NavigationMenu className="p-2 min-w-full h-[56px] bg-background justify-between">
         {/*Left*/}
         <div className="flex items-center">

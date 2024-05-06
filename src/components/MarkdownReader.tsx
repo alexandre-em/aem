@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
 
 import { CodeBlock, Pre } from './Code';
+import ImageDialog from './ImageDialog';
 import * as Typ from './Typing';
 
 const options = {
@@ -19,6 +20,7 @@ const options = {
   a: Typ.Link,
   blockquote: Typ.Paragraph,
   strong: Typ.Bold,
+  img: ImageDialog,
 };
 
 export default function MarkdownReader({ content, className }: MarkdownReaderProps) {

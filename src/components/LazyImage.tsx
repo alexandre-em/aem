@@ -4,7 +4,12 @@ import React, { useMemo, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-export default function LazyImage({ className, miniature, src, ...props }: WithClassNameComponentType & LazyImageProps) {
+export default function LazyImage({
+  className,
+  miniature,
+  src,
+  ...props
+}: WithClassNameComponentType & LazyImageProps & Partial<HTMLImageElement> & Partial<React.ComponentProps<typeof Image>>) {
   const [isLoaded, setIsLoaded] = useState(false);
   const miniatureBg = useMemo(() => {
     const urlSplitted = src.split('/');
@@ -28,13 +33,13 @@ export default function LazyImage({ className, miniature, src, ...props }: WithC
       style={miniatureBg}
       className={cn('before:absolute before:inset-0 transition ease-in-out delay-300', classNameImageLoaded.div, className)}>
       <Image
+        width={3000}
+        height={2000}
+        {...props}
         className={cn('transition ease-in-out delay-300', classNameImageLoaded.img, className)}
         src={src}
         loading="lazy"
         alt=""
-        width={2000}
-        height={2000}
-        {...props}
         onLoad={() => setIsLoaded(true)}
       />
     </div>

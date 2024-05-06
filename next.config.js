@@ -13,6 +13,12 @@ const nextConfig = {
         port: '',
         pathname: '/alexandre-em.appspot.com/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+        port: '',
+        pathname: '/alexandre-em/**',
+      },
     ],
   },
 };

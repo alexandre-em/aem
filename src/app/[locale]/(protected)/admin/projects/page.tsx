@@ -14,7 +14,7 @@ export default async function ProjectDashboard({
   const { result } = await ProjectService.getAll(
     parseInt(limit as string),
     { after, before },
-    { value: 'dateStart', order: 'desc' }
+    { value: 'createdAt', order: 'desc' }
   );
 
   const cursorAfter = result?.docs[limit - 1]?.id || '';
