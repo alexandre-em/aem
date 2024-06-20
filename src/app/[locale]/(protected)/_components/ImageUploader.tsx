@@ -1,6 +1,7 @@
 'use client';
+import { Trash } from 'lucide-react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,14 +11,39 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { ImageService } from '@/services';
 
-export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin[]) => void }) {
+function CarouselImage({ url, onDelete }: { url: string; onDelete: () => void }) {
+  return (
+    <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+      <div className="p-1 flex justify-center items-center h-full relative">
+        <div className="absolute flex justify-end w-full h-full text-white">
+          <Button className="m-2 w-10 rounded-full" variant="destructive" onClick={onDelete}>
+            <Trash />
+          </Button>
+        </div>
+        <Image src={url} alt="img" width="200" height="200" className="m-2 object-contain max-h-[250px]" loading="lazy" />
+      </div>
+    </CarouselItem>
+  );
+}
+
+export default function ImageUploader({
+  onDelete,
+  onUpload,
+  uploadedImages,
+}: {
+  onDelete: (image: ImageMin) => void;
+  onUpload: (imins: ImageMin[]) => void;
+  uploadedImages?: ImageMin[];
+}) {
   const [images, setImages] = useState<(File | null)[]>([]);
-  const [imagesWithMin, setImagesWithMin] = useState<ImageMin[]>([]);
 
   const handleSelectImage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (images.length + e.target.files!.length > 5)
+      if (images.length + e.target.files!.length + (uploadedImages?.length || 0) > 6) {
         toast({ title: 'Invalid input', description: 'Please select up to 5 pictures max', variant: 'destructive' });
+
+        return;
+      }
 
       if (e.target.files && e.target.files.length > 0) {
         setImages((prev) =>
@@ -27,35 +53,53 @@ export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin
         );
       }
     },
-    [images.length]
+    [images.length, uploadedImages?.length]
   );
 
-  const handleSubmitImage = useCallback(() => {
-    images.forEach(async (img: File | null, id: number) => {
+  const handleSubmitImage = useCallback(async () => {
+    const imageWithMinPromises = images.map((img: File | null, id: number) => {
       if (!img) return;
 
-      const newImageWithMin = await ImageService.uploadImageWithMiniature(img, id);
-
-      if (newImageWithMin instanceof Error) {
-        toast({ title: 'Upload failed', variant: 'destructive' });
-        return;
-      }
-
-      setImagesWithMin((prev) => [...prev, newImageWithMin]);
+      return ImageService.uploadImageWithMiniature(img, id);
     });
-  }, [images]);
 
-  // Success upload notification
-  useEffect(() => {
-    if (
-      images.length !== 0 &&
-      images.length === imagesWithMin.length &&
-      imagesWithMin.reduce((prev, curr) => prev && !!curr.url, true)
-    ) {
-      onUpload(imagesWithMin);
-      toast({ title: 'Upload succeeded', description: `${imagesWithMin.length} pictures uploaded` });
+    const promisesResult = await Promise.allSettled(imageWithMinPromises);
+    const isInvalid = promisesResult.find((promise) => promise.status === 'rejected');
+
+    if (isInvalid) {
+      toast({ title: 'Upload failed', variant: 'destructive' });
+      return;
     }
-  }, [images, imagesWithMin, onUpload]);
+
+    const imagesUploaded = promisesResult
+      .map((p) => (p.status === 'fulfilled' ? (p.value instanceof Error ? undefined : p.value) : undefined))
+      .filter((img) => img);
+
+    onUpload(imagesUploaded as ImageMin[]);
+    toast({ title: 'Upload succeeded', description: `${imagesUploaded.length} pictures uploaded`, variant: 'success' });
+    setImages([]);
+  }, [images, onUpload]);
+
+  const handleDeleteImage = useCallback((img: File | null) => {
+    if (img) {
+      setImages((prev) => prev.filter((file) => file !== img));
+    }
+  }, []);
+
+  const handleDeleteUploadedImage = useCallback(
+    (img: ImageMin) => {
+      if (img) {
+        ImageService.deleteImageWithMiniature(img.url)
+          .then(() => {
+            onDelete(img);
+          })
+          .catch((err) => {
+            toast({ title: 'Error occurred while delete image', description: err, variant: 'destructive' });
+          });
+      }
+    },
+    [onDelete]
+  );
 
   return (
     <Card className="h-fit mb-5">
@@ -65,24 +109,18 @@ export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin
       </CardHeader>
       <CardContent>
         <div className="flex justify-center">
-          {images.length > 0 && (
+          {(images.length > 0 || uploadedImages) && (
             <Carousel className="w-[calc(100%-64px)] h-[300px] max-w-sm">
-              <CarouselContent className="-ml-1">
+              <CarouselContent className="ml-1">
+                {uploadedImages &&
+                  uploadedImages.map(
+                    (img: ImageMin, i) =>
+                      img && <CarouselImage key={img.url + i} url={img.url} onDelete={() => handleDeleteUploadedImage(img)} />
+                  )}
                 {images.map(
                   (img: File | null, i) =>
                     img && (
-                      <CarouselItem key={`${img.name}_${i}`} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                        <div className="p-1 flex justify-center items-center h-full">
-                          <Image
-                            src={URL.createObjectURL(img)}
-                            alt="img"
-                            width="200"
-                            height="200"
-                            className="m-2 object-contain"
-                            loading="lazy"
-                          />
-                        </div>
-                      </CarouselItem>
+                      <CarouselImage key={img.name + i} url={URL.createObjectURL(img)} onDelete={() => handleDeleteImage(img)} />
                     )
                 )}
               </CarouselContent>
@@ -93,10 +131,17 @@ export default function ImageUploader({ onUpload }: { onUpload: (imins: ImageMin
         </div>
 
         <Label htmlFor="picture">Pictures</Label>
-        <Input id="picture" type="file" accept="image/*" multiple onChange={handleSelectImage} />
+        <Input
+          id="picture"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleSelectImage}
+          disabled={(uploadedImages?.length || 0) + images.length > 5}
+        />
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSubmitImage} disabled={images.length < 1}>
+        <Button onClick={handleSubmitImage} disabled={images.length < 1 || (uploadedImages && uploadedImages?.length > 5)}>
           Upload picture{images.length > 0 ? 's' : ''}
         </Button>
       </CardFooter>

@@ -70,15 +70,28 @@ export const uploadImageWithMiniature = async (img: File, id: number): Promise<I
 };
 
 export const deleteImageWithMiniature = async (url: string) => {
-  const filepath = url.split(prefix)[1];
+  const path = url.split(prefix)[1];
+  const parsedPath = path.split('/');
+  const filepath = parsedPath.join('/');
+  const filepathMin = parsedPath.map((s, i) => (i === parsedPath.length - 1 ? `min_${s}` : s)).join('/');
+
   const imageRef = ref(storage, filepath);
+  const imageMinRef = ref(storage, filepathMin);
 
   let result;
   let error;
 
   try {
-    await deleteObject(imageRef);
-    result = true;
+    const deletePromises = [deleteObject(imageRef), deleteObject(imageMinRef)];
+
+    const promiseResult = await Promise.allSettled(deletePromises);
+    const isInvalid = promiseResult.find((promise) => promise.status === 'rejected');
+
+    if (isInvalid) {
+      error = 'An error occurred while deleting ' + url;
+    } else {
+      result = true;
+    }
   } catch (e) {
     error = 'An error occurred while deleting ' + url;
   }

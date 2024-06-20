@@ -39,12 +39,18 @@ export default function EntityTable({ type, entities }: { type: EntityTypes; ent
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href={`/admin/${type}/${entity.id}`}>Edit info</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={`/admin/${type}/${entity.id}`}>Edit description</Link>
-                  </DropdownMenuItem>
+                  {type === 'projects' && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`/admin/${type}/${entity.id}`}>Edit info</Link>
+                    </DropdownMenuItem>
+                  )}
+
+                  {type === 'blog' ||
+                    (type === 'projects' && (
+                      <DropdownMenuItem asChild>
+                        <Link href={`/admin/${type}/${entity.id}/post`}>Edit post</Link>
+                      </DropdownMenuItem>
+                    ))}
                   <DropdownMenuSeparator />
                   <DeleteDropdownItem id={entity.id!} type={type} />
                 </DropdownMenuContent>
