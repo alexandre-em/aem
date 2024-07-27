@@ -35,6 +35,7 @@ type BlogType = {
   comments: CommentType[];
   like: number;
   tags: string[];
+  published: boolean;
 };
 
 type PhotoType = {

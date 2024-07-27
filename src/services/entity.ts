@@ -33,12 +33,15 @@ export class EntityService<T> {
       after?: string;
       before?: string;
     },
-    orderByQuery?: { value: string; order: 'asc' | 'desc' }
+    orderByQuery?: { value: string; order: 'asc' | 'desc' },
+    publish?: boolean
   ) {
     const docRef = collectionRef(db, this.collection);
     let totalDoc;
 
     const queryArgs = [];
+
+    if (publish) queryArgs.push(where('published', '==', publish));
 
     if (orderByQuery?.value) queryArgs.push(orderBy(orderByQuery.value, orderByQuery.order));
 

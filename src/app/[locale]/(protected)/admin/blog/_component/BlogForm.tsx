@@ -13,27 +13,31 @@ export default function BlogForm({ entity, onSubmit }: { entity?: BlogType; onSu
   const [thumbnail, setThumbnail] = useState(entity?.thumbnail.url || '');
   const [tags, setTags] = useState(entity?.tags.join(',') || '');
 
-  const handleSubmit = useCallback(() => {
-    const parsedUrl = thumbnail.split('/');
-    const filename = parsedUrl.pop();
-    const miniature = `${parsedUrl.join('/')}/min_${filename}`;
+  const handleSubmit = useCallback(
+    (published: boolean) => {
+      const parsedUrl = thumbnail.split('/');
+      const filename = parsedUrl.pop();
+      const miniature = `${parsedUrl.join('/')}/min_${filename}`;
 
-    const updatedEntity: BlogType = {
-      title,
-      content,
-      thumbnail: {
-        id: 0,
-        url: thumbnail,
-        miniature,
-      },
-      tags: tags.split(','),
-      createdAt: new Date(),
-      like: 0,
-      comments: [],
-    };
+      const updatedEntity: BlogType = {
+        title,
+        content,
+        thumbnail: {
+          id: 0,
+          url: thumbnail,
+          miniature,
+        },
+        tags: tags.split(','),
+        createdAt: new Date(),
+        like: 0,
+        published,
+        comments: [],
+      };
 
-    onSubmit(updatedEntity);
-  }, [title, content, onSubmit, thumbnail, tags]);
+      onSubmit(updatedEntity);
+    },
+    [title, content, onSubmit, thumbnail, tags]
+  );
 
   return (
     <main className="flex flex-col flex-wrap p-5">
@@ -71,9 +75,14 @@ export default function BlogForm({ entity, onSubmit }: { entity?: BlogType; onSu
           <CardContent>{content && <MarkdownReader className="max-w-2xl" content={content} />}</CardContent>
         </Card>
       </div>
-      <Button className="mt-5" disabled={!!!content} onClick={handleSubmit}>
-        Submit
-      </Button>
+      <div>
+        <Button className="mt-5 mr-5" variant="ghost" disabled={!!!content} onClick={() => handleSubmit(false)}>
+          Save
+        </Button>
+        <Button className="mt-5" disabled={!!!content} onClick={() => handleSubmit(true)}>
+          Publish
+        </Button>
+      </div>
     </main>
   );
 }

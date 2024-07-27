@@ -20,7 +20,8 @@ export default async function Blog({
     {
       value: 'createdAt',
       order: 'desc',
-    }
+    },
+    true
   );
   const blogPosts: BlogType[] = result?.docs.map((doc) => ({
     ...doc.data(),
@@ -43,28 +44,29 @@ export default async function Blog({
         <LimitSelect />
       </div>
       <div className="flex flex-wrap">
-        {blogPosts.map((post) => (
-          <Card key={post.id} className="m-2">
-            <Link href={`/blog/${post.id}`} locale={locale}>
-              <CardContent className="p-2">
-                <LazyImage src={post.thumbnail?.url || '/images/no-image.png'} className="w-[250px] h-[141px] object-cover" />
-              </CardContent>
-              <CardFooter className="flex flex-col items-start max-w-[250px]">
-                <h2 className="text-xl font-bold">{post.title}</h2>
-                <CardDescription className="text-xs">{formatDate(post.createdAt)}</CardDescription>
-                <div className="mt-2">
-                  {post.tags
-                    .filter((_, i) => i < 3)
-                    .map((k: string, i: number) => (
-                      <Badge className="m-1 uppercase text-muted" key={`${k}-${i}`}>
-                        {k}
-                      </Badge>
-                    ))}
-                </div>
-              </CardFooter>
-            </Link>
-          </Card>
-        ))}
+        {blogPosts &&
+          blogPosts.map((post) => (
+            <Card key={post.id} className="m-2">
+              <Link href={`/blog/${post.id}`} locale={locale}>
+                <CardContent className="p-2">
+                  <LazyImage src={post.thumbnail?.url || '/images/no-image.png'} className="w-[250px] h-[141px] object-cover" />
+                </CardContent>
+                <CardFooter className="flex flex-col items-start max-w-[250px]">
+                  <h2 className="text-xl font-bold">{post.title}</h2>
+                  <CardDescription className="text-xs">{formatDate(post.createdAt)}</CardDescription>
+                  <div className="mt-2">
+                    {post.tags
+                      .filter((_, i) => i < 3)
+                      .map((k: string, i: number) => (
+                        <Badge className="m-1 uppercase text-muted" key={`${k}-${i}`}>
+                          {k}
+                        </Badge>
+                      ))}
+                  </div>
+                </CardFooter>
+              </Link>
+            </Card>
+          ))}
       </div>
       {totalDoc && Math.ceil(totalDoc / parseInt(limit)) > 1 && (
         <CursorPagination cursor={{ after: cursorAfter, before: cursorBefore }} limit={limit} />
