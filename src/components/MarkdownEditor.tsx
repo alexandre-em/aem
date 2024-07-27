@@ -63,6 +63,7 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
             placeholder="Type your content here"
             required
             autoFocus
+            name="content"
             value={content}
             onChange={(e) => onChange(e.target.value)}
             rows={30}

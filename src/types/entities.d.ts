@@ -20,6 +20,7 @@ type ProjectType = {
 type CommentType = {
   id?: string;
   author: string;
+  email: string;
   createdAt: Date;
   content: string;
   comments: CommentType[];
@@ -29,7 +30,7 @@ type BlogType = {
   id?: string;
   title: string;
   createdAt: Date;
-  submail: ImageMin;
+  thumbnail: ImageMin;
   content: string;
   comments: CommentType[];
   like: number;

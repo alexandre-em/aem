@@ -13,6 +13,7 @@ import { GalleryService, dynamicEntityService } from '@/services';
 export default function CommentReply({ id, type }: { id: string; type: 'gallery' | 'blog' }) {
   const [comment, setComment] = useState<Omit<CommentType, 'createdAt'>>({
     author: '',
+    email: '',
     content: '',
     comments: [],
   });

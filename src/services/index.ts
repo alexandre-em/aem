@@ -1,3 +1,4 @@
+import { BlogService as BService } from './blog';
 import { GalleryService as GService } from './gallery';
 import { ProjectService as PService } from './project';
 
@@ -6,6 +7,7 @@ export * as MessageService from './message';
 
 export const ProjectService = new PService();
 export const GalleryService = new GService();
+export const BlogService = new BService();
 
 export const dynamicEntityService = {
   projects: ProjectService,

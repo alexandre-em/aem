@@ -45,12 +45,11 @@ export default function EntityTable({ type, entities }: { type: EntityTypes; ent
                     </DropdownMenuItem>
                   )}
 
-                  {type === 'blog' ||
-                    (type === 'projects' && (
-                      <DropdownMenuItem asChild>
-                        <Link href={`/admin/${type}/${entity.id}/post`}>Edit post</Link>
-                      </DropdownMenuItem>
-                    ))}
+                  {(type === 'blog' || type === 'projects') && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`/admin/${type}/${entity.id}/${type === 'projects' ? 'post' : ''}`}>Edit post</Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator />
                   <DeleteDropdownItem id={entity.id!} type={type} />
                 </DropdownMenuContent>

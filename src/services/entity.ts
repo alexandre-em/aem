@@ -21,7 +21,7 @@ import firebase_app from '@/lib/firebase';
 const db = getFirestore(firebase_app);
 
 export class EntityService<T> {
-  private collection: EntityTypes;
+  protected collection: EntityTypes;
 
   constructor(collection: EntityTypes) {
     this.collection = collection;
