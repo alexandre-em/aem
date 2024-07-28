@@ -26,7 +26,7 @@ export const Bold = ({ ...props }) => (
 );
 
 export const Paragraph = ({ ...props }) => (
-  <blockquote className="border-s-[0.25rem] font-thin italic text-muted-foreground text-md" {...props}>
+  <blockquote className="border-s-[0.25rem] font-thin italic bg-secondary text-muted-foreground text-md px-2" {...props}>
     {props.children}
   </blockquote>
 );

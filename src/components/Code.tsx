@@ -18,5 +18,5 @@ export const CodeBlock = ({ ...props }) => {
       </SyntaxHighlighter>
     );
 
-  return <code className="bg-primary-foreground border-2 border-primary-foreground rounded-md">{props.children}</code>;
+  return <code className="bg-secondary border-2 border-secondary text-primary rounded-md">{props.children}</code>;
 };
