@@ -1,3 +1,4 @@
+import { HeartIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
@@ -6,6 +7,7 @@ import LazyImage from '@/components/LazyImage';
 import LimitSelect from '@/components/LimitSelect';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
+import { getReadTime } from '@/lib/utils';
 import { Link } from '@/navigation';
 import { BlogService, formatDate } from '@/services';
 
@@ -29,6 +31,8 @@ export default async function Blog({
     id: doc.id,
   })) as unknown as BlogType[];
 
+  blogPosts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
   if (result === undefined) return 'Loading...';
 
   const cursorAfter = result?.docs[limit - 1]?.id || '';
@@ -46,14 +50,20 @@ export default async function Blog({
       <div className="flex flex-wrap">
         {blogPosts &&
           blogPosts.map((post) => (
-            <Card key={post.id} className="m-2">
+            <Card key={post.id} className="m-2 h-fit">
               <Link href={`/blog/${post.id}`} locale={locale}>
-                <CardContent className="p-2">
+                <CardContent className="p-2 relative">
+                  <div className="absolute z-10 flex items-center right-3 top-3">
+                    <HeartIcon className="mr-1" />
+                    {post.like}
+                  </div>
                   <LazyImage src={post.thumbnail?.url || '/images/no-image.png'} className="w-[250px] h-[141px] object-cover" />
                 </CardContent>
                 <CardFooter className="flex flex-col items-start max-w-[250px]">
                   <h2 className="text-xl font-bold">{post.title}</h2>
-                  <CardDescription className="text-xs">{formatDate(post.createdAt)}</CardDescription>
+                  <CardDescription className="text-xs">
+                    {formatDate(post.createdAt)} - {getReadTime(post.content)} min read
+                  </CardDescription>
                   <div className="mt-2">
                     {post.tags
                       .filter((_, i) => i < 3)

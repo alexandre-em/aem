@@ -7,6 +7,7 @@ import MarkdownReader from '@/components/MarkdownReader';
 import MessagesBox from '@/components/MessagesBox';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { getReadTime } from '@/lib/utils';
 import { BlogService, formatDate } from '@/services';
 
 import LikeButton from './_components/LikeButton';
@@ -59,7 +60,9 @@ export default async function ProjectId({ params: { id } }: IdParamsType) {
       <div>
         <LazyImage src={blog.thumbnail.url} className="w-full h-[200px] object-cover" />
         <h1 className="text-3xl font-black my-2">{blog.title}</h1>
-        <p className="text-muted-foreground text-sm">Published the {formatDate(blog.createdAt)}</p>
+        <p className="text-muted-foreground text-sm">
+          Published the {formatDate(blog.createdAt)} - {getReadTime(blog.content)} min read
+        </p>
       </div>
 
       <div className="mt-2">

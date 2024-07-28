@@ -1,4 +1,5 @@
 import {
+  QueryConstraint,
   collection as collectionRef,
   deleteDoc,
   doc,
@@ -39,11 +40,10 @@ export class EntityService<T> {
     const docRef = collectionRef(db, this.collection);
     let totalDoc;
 
-    const queryArgs = [];
+    const queryArgs: QueryConstraint[] = [];
 
-    if (publish) queryArgs.push(where('published', '==', publish));
-
-    if (orderByQuery?.value) queryArgs.push(orderBy(orderByQuery.value, orderByQuery.order));
+    if (publish !== undefined) queryArgs.push(where('published', '==', publish));
+    else if (orderByQuery?.value) queryArgs.push(orderBy(orderByQuery.value, orderByQuery.order));
 
     if (lim) {
       queryArgs.push(limit(lim));

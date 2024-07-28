@@ -12,7 +12,7 @@ export const BlogService = new BService();
 export const dynamicEntityService = {
   projects: ProjectService,
   gallery: GalleryService,
-  blog: ProjectService,
+  blog: BlogService,
 };
 
 export const COLLECTIONS_NAME = {
