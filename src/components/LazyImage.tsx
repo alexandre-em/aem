@@ -39,7 +39,7 @@ export default function LazyImage({
         className={cn('transition ease-in-out delay-300', classNameImageLoaded.img, className)}
         src={src}
         loading="lazy"
-        alt=""
+        alt={props.alt || ''}
         onLoad={() => setIsLoaded(true)}
       />
     </div>

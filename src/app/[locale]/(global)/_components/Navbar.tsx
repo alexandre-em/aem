@@ -104,7 +104,7 @@ export default function Navbar({ messages, locale }: NavbarComponentsProps) {
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <PawPrint className="mr-2" />
-            <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight mr-4">A. Em</h1>
+            <h2 className="scroll-m-20 text-xl font-extrabold tracking-tight mr-4">A. Em</h2>
           </Link>
           <LanguageSwitch locale={locale} className="hidden sm:flex" />
           <DarkModeButton className="hidden sm:flex" />

@@ -1,11 +1,11 @@
 {
   "Metadata": {
-    "description": "Alexandre's portfolio website"
+    "description": "Alexandre's portfolio website, fullstack developer based near Paris in France. Here you can find all of my project reports, updates, blog posts on differents topic"
   },
   "Index": {
     "title": "Hello there!",
     "subtitle": "I'm Alexandre,",
-    "description": "Fullstack developer JS based in Paris, France",
+    "description": "Fullstack developer JS based near Paris, France",
     "resume": "Resume",
     "link": "https://drive.google.com/file/d/11AGfVL6PDe58coB8jILWTiRPELrNRzoS/view?usp=drive_link",
     "projects": "My work",

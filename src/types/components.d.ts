@@ -9,6 +9,7 @@ type LinkedCardItemProps = {
   date: string;
   url: string;
   src: string; // image url
+  alt?: string;
 };
 
 type NavbarComponentsProps = {

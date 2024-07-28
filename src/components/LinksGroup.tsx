@@ -29,7 +29,7 @@ export default function LinksGroup() {
             width="60"
             height="60"
             src="/leetcode.svg"
-            alt=""
+            alt="My profile on Leetcode, an algorithm training platform "
             className={iconColor[theme === 'system' ? (systemTheme! as ThemeEnum) : (theme! as ThemeEnum)]}
           />
         </Button>

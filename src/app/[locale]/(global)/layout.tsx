@@ -15,7 +15,7 @@ export async function generateMetadata({ params: { locale } }: LocaleParamsType)
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return {
-    title: 'A. Em',
+    title: 'A. Em website',
     description: t('description'),
     keywords: [
       'fullstack',

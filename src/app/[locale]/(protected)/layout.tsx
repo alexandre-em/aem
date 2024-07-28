@@ -15,7 +15,7 @@ const fontSans = FontSans({
 
 export const metadata = {
   title: 'A. Em - Admin dashboard',
-  description: "Alexandre Em's portfolio",
+  description: "Alexandre Em's portfolio, fullstack developer based near Paris in France",
 };
 
 export default function AdminLayout({ children }: React.PropsWithChildren<unknown>) {

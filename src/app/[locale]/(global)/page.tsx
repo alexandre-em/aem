@@ -25,7 +25,12 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
     <main className="flex flex-wrap min-h-[calc(100dvh-352px)] xsm:min-h-[calc(100dvh-57px)] justify-around p-12">
       {/* Left side */}
       <div className="flex flex-col items-center sm:items-start">
-        <LazyImage className="w-44 rounded-full" miniature={'/images/photo_sm.jpg'} src="/images/photo.jpg" />
+        <LazyImage
+          className="w-44 rounded-full"
+          miniature={'/images/photo_sm.jpg'}
+          src="/images/photo.jpg"
+          alt="Alexandre Em, fullstack developer"
+        />
         <h1 className="text-3xl font-black mt-4">{t('title')}</h1>
         <h2 className="text-lg font-bold">{t('subtitle')}</h2>
         <p>{t('description')}</p>
@@ -69,6 +74,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           date={t('exp-monk-date')}
           url="https://monk.ai/"
           src="/images/monk.png"
+          alt="A french startup in the automobile sector, developing app using intern AI to detect vehicle damages by analysing photos"
         />
 
         {/* Education */}
@@ -81,6 +87,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           date={t('ed-su-date')}
           url="https://sciences.sorbonne-universite.fr/formation-sciences/masters/master-informatique/parcours-res-apprentissage-insta"
           src="/images/upmc.png"
+          alt="Sorbone University, master in computer science, computer network and software engineering"
         />
         <div className="w-full flex justify-center">
           <Separator orientation="vertical" className="h-5" />
@@ -91,6 +98,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           date={t('ed-insta-date')}
           url="https://cfa-insta.fr/analyste-developpeur/"
           src="/images/insta.jpg"
+          alt="CFA Insta, master in computer science"
         />
 
         {/* Projects */}
@@ -103,6 +111,7 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
                   <LazyImage
                     src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
                     className="max-w-[250px] h-[141px] object-cover"
+                    alt="KanjiUp: an hybrid app developed with React Native, Nest/Node to help study kanji characters by drawing them"
                   />
                 </CardContent>
                 <CardFooter className="flex flex-col items-start max-w-[250px]">
