@@ -30,9 +30,11 @@ export async function generateMetadata({ params: { locale } }: LocaleParamsType)
       'Javascript',
       'Typescript',
     ],
+    alternates: { canonical: 'https://alexandre-em.fr' },
     openGraph: {
       title: `A. Em's website`,
       description: t('description'),
+      type: 'website',
       images:
         'https://storage.googleapis.com/alexandre-em.appspot.com/uploads/pictures/f0d1ab1c-c4d5-4522-999a-c2fd50e987ec/スクリーンショット 2024-04-18 16.43.50.png',
       url: 'https://alexandre-em.fr',

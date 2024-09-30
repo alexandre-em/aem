@@ -66,6 +66,30 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
         </div>
         <Separator className="mt-3 mb-2" />
 
+        {/* Projects */}
+        <h2 className="text-lg font-bold">{t('highlight')}</h2>
+        <div className="p-1 flex flex-wrap justify-center sm:justify-start">
+          {HIGHLIGHT_PROJECT.map((proj) => (
+            <Card key={proj.id} className="m-2 w-fit">
+              <Link href={`/projects/${proj.id}`} locale={locale}>
+                <CardContent className="p-2">
+                  <LazyImage
+                    src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
+                    className="max-w-[250px] h-[141px] object-cover"
+                    alt="KanjiUp: an hybrid app developed with React Native, Nest/Node to help study kanji characters by drawing them"
+                  />
+                </CardContent>
+                <CardFooter className="flex flex-col items-start max-w-[250px]">
+                  <h2 className="text-xl font-bold">{proj.title}</h2>
+                  <CardDescription className="text-xs">
+                    {formatDate(proj.dateStart)} - {proj.dateEnd ? formatDate(proj.dateEnd) : 'now'}
+                  </CardDescription>
+                </CardFooter>
+              </Link>
+            </Card>
+          ))}
+        </div>
+
         <h2 className="text-lg font-bold mb-3">{t('experience')}</h2>
         {/* Experience */}
         <LinkedCardItem
@@ -100,30 +124,6 @@ export default function Home({ params: { locale } }: LocaleParamsType) {
           src="/images/insta.jpg"
           alt="CFA Insta, master in computer science"
         />
-
-        {/* Projects */}
-        <h2 className="text-lg font-bold">{t('highlight')}</h2>
-        <div className="p-1 flex flex-wrap justify-center sm:justify-start">
-          {HIGHLIGHT_PROJECT.map((proj) => (
-            <Card key={proj.id} className="m-2 w-fit">
-              <Link href={`/projects/${proj.id}`} locale={locale}>
-                <CardContent className="p-2">
-                  <LazyImage
-                    src={proj.images.length > 0 ? proj.images.find((img) => img.id === 0)!.url : '/images/no-image.png'}
-                    className="max-w-[250px] h-[141px] object-cover"
-                    alt="KanjiUp: an hybrid app developed with React Native, Nest/Node to help study kanji characters by drawing them"
-                  />
-                </CardContent>
-                <CardFooter className="flex flex-col items-start max-w-[250px]">
-                  <h2 className="text-xl font-bold">{proj.title}</h2>
-                  <CardDescription className="text-xs">
-                    {formatDate(proj.dateStart)} - {proj.dateEnd ? formatDate(proj.dateEnd) : 'now'}
-                  </CardDescription>
-                </CardFooter>
-              </Link>
-            </Card>
-          ))}
-        </div>
 
         {/* Github/Leetcode stats */}
         <Separator className="mt-3 mb-2" />

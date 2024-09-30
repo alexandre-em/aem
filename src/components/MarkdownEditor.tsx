@@ -23,6 +23,18 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
     }
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      // eslint-disable-next-line
+      const value = (e.target as any).value;
+      // eslint-disable-next-line
+      const cursorPosition = (e.target as any).selectionStart;
+      const newInput = value.substring(0, cursorPosition) + '     ' + value.substring(cursorPosition, value.length);
+      onChange(newInput);
+    }
+  };
+
   const handleSelectImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0 && e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -66,6 +78,7 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
             name="content"
             value={content}
             onChange={(e) => onChange(e.target.value)}
+            onKeyDown={handleKeyDown}
             rows={30}
           />
         </div>
