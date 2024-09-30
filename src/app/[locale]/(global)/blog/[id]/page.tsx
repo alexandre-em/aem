@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import React, { cache } from 'react';
 
 import LazyImage from '@/components/LazyImage';
 import MarkdownReader from '@/components/MarkdownReader';
 import MessagesBox from '@/components/MessagesBox';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { redis, redisKeys } from '@/lib/redis';
 import { getReadTime } from '@/lib/utils';
 import { BlogService, formatDate } from '@/services';
 
@@ -14,33 +15,13 @@ import LikeButton from './_components/LikeButton';
 import NewComment from './_components/NewComment';
 import ShareButtonGroup from '../../_components/ShareButtonGroup';
 
-export async function generateMetadata({ params: { id } }: IdParamsType): Promise<Metadata> {
-  // eslint-disable-next-line testing-library/no-await-sync-queries
-  const { result } = await BlogService.getById(id);
-  const data = result!.data();
-  const blog: BlogType = { ...(data as Omit<BlogType, 'id'>), id: result!.id };
-
-  return {
-    title: `A. Em | ${blog.title}`,
-    description: blog.content
-      .replace(/[!@#$%^&*~>]/g, '')
-      .replace(/\[(.*?)\]\(.*?\)/g, '')
-      .substring(0, 150),
-    keywords: blog.tags,
-    openGraph: {
-      title: `A. Em | ${blog.title}`,
-      description: blog.content
-        .replace(/[!@#$%^&*~>]/g, '')
-        .replace(/\[(.*?)\]\(.*?\)/g, '')
-        .substring(0, 150),
-      images: blog.thumbnail.url,
-    },
-  };
-}
+const getBlogById = cache((id: string) => {
+  return BlogService.getById(id);
+});
 
 export default async function ProjectId({ params: { id } }: IdParamsType) {
   // eslint-disable-next-line testing-library/no-await-sync-queries
-  const { result, error } = await BlogService.getById(id);
+  const { result, error } = await getBlogById(id);
   const blog: BlogType | undefined =
     result && result.data()
       ? {
@@ -92,4 +73,36 @@ export default async function ProjectId({ params: { id } }: IdParamsType) {
       ))}
     </main>
   );
+}
+
+export async function generateMetadata({ params: { id } }: IdParamsType): Promise<Metadata> {
+  // eslint-disable-next-line testing-library/no-await-sync-queries
+  const { result } = await getBlogById(id);
+  const data = result!.data();
+  const blog: BlogType = { ...(data as Omit<BlogType, 'id'>), id: result!.id };
+
+  return {
+    title: `A. Em | ${blog.title}`,
+    description: blog.content
+      .replace(/[!@#$%^&*~>]/g, '')
+      .replace(/\[(.*?)\]\(.*?\)/g, '')
+      .substring(0, 150),
+    keywords: blog.tags,
+    openGraph: {
+      title: `A. Em | ${blog.title}`,
+      description: blog.content
+        .replace(/[!@#$%^&*~>]/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '')
+        .substring(0, 150),
+      images: blog.thumbnail.url,
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  const projectIds: string | null = await redis.get(redisKeys.blog);
+
+  return projectIds!.split(';').map((id) => ({
+    id,
+  }));
 }

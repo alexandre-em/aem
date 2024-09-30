@@ -1,44 +1,26 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import React, { cache } from 'react';
 
 import CarouselDialog from '@/components/CarouselDialog';
 import MarkdownReader from '@/components/MarkdownReader';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { redis, redisKeys } from '@/lib/redis';
 import { ProjectService, formatDate } from '@/services';
 
 import ButtonGroup from './_components/ButtonGroup';
 import ShareButtonGroup from '../../_components/ShareButtonGroup';
 
-export async function generateMetadata({ params: { id } }: IdParamsType): Promise<Metadata> {
-  // eslint-disable-next-line testing-library/no-await-sync-queries
-  const { result } = await ProjectService.getById(id);
-  const data = result!.data();
-  const project: ProjectType = { ...(data as Omit<ProjectType, 'id'>), id: result!.id };
+export const dynamicParams = true;
 
-  return {
-    title: `A. Em | ${project.title}`,
-    description: project.content
-      .replace(/[!@#$%^&*~>]/g, '')
-      .replace(/\[(.*?)\]\(.*?\)/g, '')
-      .substring(0, 150),
-    keywords: project.keywords,
-    openGraph: {
-      title: `A. Em | ${project.title}`,
-      description: project.content
-        .replace(/[!@#$%^&*~>]/g, '')
-        .replace(/\[(.*?)\]\(.*?\)/g, '')
-        .substring(0, 150),
-      images: project.images,
-      url: project.demo || project.github,
-    },
-  };
-}
+const getProjectById = cache((id: string) => {
+  return ProjectService.getById(id);
+});
 
 export default async function ProjectId({ params: { id } }: IdParamsType) {
   // eslint-disable-next-line testing-library/no-await-sync-queries
-  const { result, error } = await ProjectService.getById(id);
+  const { result, error } = await getProjectById(id);
   const project: ProjectType | undefined =
     result && result.data()
       ? {
@@ -88,4 +70,37 @@ export default async function ProjectId({ params: { id } }: IdParamsType) {
       </div>
     </main>
   );
+}
+
+export async function generateMetadata({ params: { id } }: IdParamsType): Promise<Metadata> {
+  // eslint-disable-next-line testing-library/no-await-sync-queries
+  const { result } = await getProjectById(id);
+  const data = result!.data();
+  const project: ProjectType = { ...(data as Omit<ProjectType, 'id'>), id: result!.id };
+
+  return {
+    title: `A. Em | ${project.title}`,
+    description: project.content
+      .replace(/[!@#$%^&*~>]/g, '')
+      .replace(/\[(.*?)\]\(.*?\)/g, '')
+      .substring(0, 150),
+    keywords: project.keywords,
+    openGraph: {
+      title: `A. Em | ${project.title}`,
+      description: project.content
+        .replace(/[!@#$%^&*~>]/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '')
+        .substring(0, 150),
+      images: project.images,
+      url: project.demo || project.github,
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  const projectIds: string | null = await redis.get(redisKeys.projects);
+
+  return projectIds!.split(';').map((id) => ({
+    id,
+  }));
 }
