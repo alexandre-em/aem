@@ -45,7 +45,7 @@ export default async function Gallery({ searchParams: { limit = '10', after = un
           <Card key={photo.id} className="m-2">
             <Link href={`/gallery/${photo.id}`}>
               <CardContent className="p-2">
-                <LazyImage src={photo.image.url} className="max-w-[250px]" />
+                <LazyImage src={photo.image.url} className="w-[250px] h-[166.6px] object-cover" />
               </CardContent>
               <CardFooter className="flex flex-col items-start max-w-[250px]">
                 <h2 className="text-xl font-bold">{photo.title}</h2>
