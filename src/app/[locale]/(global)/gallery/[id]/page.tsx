@@ -40,7 +40,6 @@ export default async function GalleryId({ params: { id } }: IdParamsType) {
         }
       : undefined;
 
-  if (!result) return 'Loading...';
   // TODO: Manage error
   if (error) return <div>Error</div>;
   if (!photo) return notFound();
